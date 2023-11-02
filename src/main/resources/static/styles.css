@@ -1,0 +1,15 @@
+body {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.container {
+  text-align: center;
+}
+
+.centered-text {
+  background-color: #f2f2f2;
+  padding: 10px;
+}
