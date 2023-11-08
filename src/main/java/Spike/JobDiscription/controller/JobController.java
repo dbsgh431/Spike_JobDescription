@@ -40,10 +40,9 @@ public class JobController {
     }
 
     @PostMapping("/jobs/add")
-    public String addJob(@ModelAttribute() JobDto dto, Model model) {
+    public String addJob(@ModelAttribute() JobDto dto) {
         Job job = dto.toEntity();
         Job save = jobRepository.save(job);
-        model.addAttribute("job", save);
         return "redirect:/jobs";
     }
 }
