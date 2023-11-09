@@ -21,7 +21,7 @@
     <tbody>
     <tr th:each="job : ${jobs}">
         <th scope="row" th:text="${jobStat.count}">index</th>
-        <td th:text="${job.companyName}">회사명</td>
+        <td><a th:href="@{|jobs/edit/${job.id}|}" th:text="${job.companyName}">회사명</a></td>
         <td th:text="${job.role}">직무</td>
         <td th:text="${job.isApply} ? '지원 완료' : '' "></td>
     </tr>
