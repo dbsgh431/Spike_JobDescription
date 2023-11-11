@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -48,7 +45,7 @@ public class JobController {
     }
 
     @GetMapping("/jobs/edit/{id}")
-    public String EditJob(@PathVariable("id") Long id, Model model) {
+    public String editJob(@PathVariable("id") Long id, Model model) {
         Job job = jobRepository.findById(id).orElse(null);
         if (job != null) {
             model.addAttribute("job", job);
@@ -56,4 +53,29 @@ public class JobController {
         }
         return "redirect:/jobs";
     }
+
+    @GetMapping("/jobs/update/{id}")
+    public String updateJobForm(@PathVariable("id") Long id, Model model) {
+        Job job = jobRepository.findById(id).orElse(null);
+        if (job != null) {
+            model.addAttribute("jobDto", job);
+            return "updateJob";
+        }
+        return "redirect:/jobs";
+    }
+
+    @PostMapping("/jobs/update")
+    public String updateJob(JobDto dto, Model model) {
+        Job job = dto.toEntity();
+        Job updated = jobRepository.findById(job.getId()).orElse(null);
+        if (updated != null) {
+            jobRepository.save(job);
+            model.addAttribute("job", job);
+            return "redirect:/jobs/edit/" + job.getId();
+        }
+        return "redirect:/jobs";
+    }
+
+
+
 }

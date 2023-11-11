@@ -11,30 +11,30 @@
 <div th:insert="~{layouts/header :: header}"></div>
 <!---->
 
-<div th:object="${job}">
+<form th:object="${jobDto}" method="post" th:action="@{|/jobs/update|}">
+  <input name="id" type="hidden" th:value="*{id}">
   <div class="mb-3">
     <label class="form-label">회사 이름</label>
-    <input type="text" class="form-control" th:field="*{companyName}" disabled>
+    <input type="text" class="form-control" th:field="*{companyName}">
   </div>
   <div class="mb-3">
     <label class="form-label">직무</label>
-    <input type="text" class="form-control" th:field="*{role}" disabled>
+    <input type="text" class="form-control" th:field="*{role}">
   </div>
   <div class="mb-3">
     <label class="form-label">공고 URL</label>
-    <input type="url" class="form-control" th:field="*{url}" disabled>
+    <input type="url" class="form-control" th:field="*{url}">
   </div>
   <div class="form-check">
-    <input class="form-check-input" type="checkbox" th:field="*{isApply}" disabled>
+    <input class="form-check-input" type="checkbox" th:field="*{isApply}">
     <label id="isApply" for="isApply" class="form-check-label" >
       지원 여부
     </label>
   </div>
   <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-    <a class="btn btn-primary" th:href="@{|/jobs/update/${job.id}|}" role="button">수정하기</a>
-    <a class="btn btn-primary" href="/jobs" role="button">목록으로</a>
+    <button type="submit" class="btn btn-primary">등록</button>
   </div>
-</div>
+</form>
 
 
 <!---->
