@@ -31,7 +31,9 @@
     </label>
   </div>
   <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a class="btn btn-primary" th:href="@{${job.url}}" role="button" target="_blank">홈페이지에서 지원하기</a>
     <a class="btn btn-primary" th:href="@{|/jobs/update/${job.id}|}" role="button">수정하기</a>
+    <a class="btn btn-primary" th:href="@{|/jobs/delete/${job.id}|}" role="button">삭제하기</a>
     <a class="btn btn-primary" href="/jobs" role="button">목록으로</a>
   </div>
 </div>

@@ -21,7 +21,8 @@ public class JobController {
 
     @PostConstruct
     public void addDummy() {
-        jobRepository.save(new Job(null, "토스", "기획", "naver.com", false));
+        jobRepository.save(new Job(null, "네이버", "기획", "https://www.naver.com/", false));
+        jobRepository.save(new Job(null, "구글", "프론트엔드", "https://www.google.com/", false));
     }
 
     @GetMapping("/jobs")
@@ -76,6 +77,14 @@ public class JobController {
         return "redirect:/jobs";
     }
 
+    @GetMapping("/jobs/delete/{id}")
+    public String deleteJob(@PathVariable("id") Long id) {
+        Job target = jobRepository.findById(id).orElse(null);
+        if (target != null) {
+            jobRepository.delete(target);
+            return "redirect:/jobs";
+        }
+        return "editJob";
 
-
+    }
 }
