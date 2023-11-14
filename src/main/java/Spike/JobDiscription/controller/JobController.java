@@ -8,9 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,7 +21,8 @@ public class JobController {
 
     @PostConstruct
     public void addDummy() {
-        jobRepository.save(new Job(null, "토스", "기획", "naver.com", false));
+        jobRepository.save(new Job(null, "네이버", "기획", "https://www.naver.com/", false));
+        jobRepository.save(new Job(null, "구글", "프론트엔드", "https://www.google.com/", false));
     }
 
     @GetMapping("/jobs")
@@ -44,5 +43,48 @@ public class JobController {
         Job job = dto.toEntity();
         Job save = jobRepository.save(job);
         return "redirect:/jobs";
+    }
+
+    @GetMapping("/jobs/edit/{id}")
+    public String editJob(@PathVariable("id") Long id, Model model) {
+        Job job = jobRepository.findById(id).orElse(null);
+        if (job != null) {
+            model.addAttribute("job", job);
+            return "editJob";
+        }
+        return "redirect:/jobs";
+    }
+
+    @GetMapping("/jobs/update/{id}")
+    public String updateJobForm(@PathVariable("id") Long id, Model model) {
+        Job job = jobRepository.findById(id).orElse(null);
+        if (job != null) {
+            model.addAttribute("jobDto", job);
+            return "updateJob";
+        }
+        return "redirect:/jobs";
+    }
+
+    @PostMapping("/jobs/update")
+    public String updateJob(JobDto dto, Model model) {
+        Job job = dto.toEntity();
+        Job updated = jobRepository.findById(job.getId()).orElse(null);
+        if (updated != null) {
+            jobRepository.save(job);
+            model.addAttribute("job", job);
+            return "redirect:/jobs/edit/" + job.getId();
+        }
+        return "redirect:/jobs";
+    }
+
+    @GetMapping("/jobs/delete/{id}")
+    public String deleteJob(@PathVariable("id") Long id) {
+        Job target = jobRepository.findById(id).orElse(null);
+        if (target != null) {
+            jobRepository.delete(target);
+            return "redirect:/jobs";
+        }
+        return "editJob";
+
     }
 }

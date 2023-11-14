@@ -11,7 +11,7 @@ import lombok.*;
 @Getter
 @Setter
 public class JobDto {
-
+    private Long id;
     private String companyName;
     private String role;
     private String url;
@@ -19,6 +19,6 @@ public class JobDto {
     private Boolean isApply;
 
     public Job toEntity() {
-        return new Job(null, companyName, role, url, isApply);
+        return new Job(id, companyName, role, url, isApply);
     }
 }
