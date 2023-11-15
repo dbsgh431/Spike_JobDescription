@@ -13,12 +13,12 @@ import lombok.*;
 public class JobDto {
     private Long id;
     private String companyName;
-    private String role;
+    private String position;
     private String url;
 
     private Boolean isApply;
 
     public Job toEntity() {
-        return new Job(id, companyName, role, url, isApply);
+        return new Job(id, companyName, position, url, isApply);
     }
 }

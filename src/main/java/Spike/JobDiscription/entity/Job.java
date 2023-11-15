@@ -1,5 +1,6 @@
 package Spike.JobDiscription.entity;
 
+import Spike.JobDiscription.dto.JobDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,10 +20,22 @@ public class Job {
     @Column
     private String companyName;
     @Column
-    private String role;
+    private String position;
     @Column
     private String url;
     @Column
     private Boolean isApply;
 
+    public void update(JobDto dto) {
+        if (this.companyName != null) {
+            this.companyName = dto.getCompanyName();
+        }
+        if (this.position != null) {
+            this.position = dto.getPosition();
+        }
+        if (this.url != null) {
+            this.url = dto.getUrl();
+        }
+        this.isApply = dto.getIsApply();
+    }
 }
