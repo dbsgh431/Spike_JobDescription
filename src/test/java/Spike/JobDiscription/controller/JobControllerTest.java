@@ -7,9 +7,11 @@ import Spike.JobDiscription.repository.JobRepository;
 
 
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
@@ -18,7 +20,9 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
+@RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
 class JobControllerTest {
 
     private final JobRepository jobRepository;
@@ -29,13 +33,16 @@ class JobControllerTest {
     }
 
     @Test
+    @Transactional
     void 공고_전체조회() {
         // 예상 데이터
-        Job a = new Job(1L, "네이버", "기획", "https://www.naver.com/", false);
-        Job b = new Job(2L, "구글", "프론트엔드", "https://www.google.com/", false);
+        Job a = new Job(null, "네이버", "기획", "https://www.naver.com/", false);
+        Job b = new Job(null, "구글", "프론트엔드", "https://www.google.com/", false);
         List<Job> expected = Arrays.asList(a, b);
 
         // 실제 데이터
+        jobRepository.save(a);
+        jobRepository.save(b);
         List<Job> actual = jobRepository.findAll();
 
         // 검증 처리
@@ -54,7 +61,7 @@ class JobControllerTest {
         Boolean isApply = false;
 
         JobDto dto = new JobDto(null, companyName, role, url, isApply);
-        Job expected = new Job(3L, companyName, role, url, isApply);
+        Job expected = new Job(null, companyName, role, url, isApply);
 
         // 실제 데이터
         Job actual = jobRepository.save(dto.toEntity());
@@ -68,7 +75,7 @@ class JobControllerTest {
     @Transactional
     void 공고id로_조회_실패() {
         // 예상 데이터
-        Long id = 4L;
+        Long id = 2L;
         JobDto jobDto = new JobDto(null, "넥슨", "QA", "https://www.nexongames.co.kr/", false);
         Job job = jobDto.toEntity();
         Job expected = jobRepository.save(job);
@@ -85,13 +92,12 @@ class JobControllerTest {
     @Transactional
     void 공고id로_조회_성공() {
         // 예상 데이터
-        Long id = 3L;
         JobDto jobDto = new JobDto(null, "넥슨", "QA", "https://www.nexongames.co.kr/", false);
         Job job = jobDto.toEntity();
         Job expected = jobRepository.save(job);
 
         // 실제 데이터
-        Job actual = jobRepository.findById(id).orElse(null);
+        Job actual = jobRepository.findById(expected.getId()).orElse(null);
 
         // 검증 처리
         assertThat(actual.getId()).isEqualTo(expected.getId());
@@ -102,8 +108,7 @@ class JobControllerTest {
     @Transactional
     void 공고id로_수정_성공() {
         // 예상 데이터
-        Long id = 3L;
-        Job expected = new Job(id, "넥슨코리아", "QA", "https://www.nexongames.co.kr/", true);
+        Job expected = new Job(null, "넥슨코리아", "QA", "https://www.nexongames.co.kr/", true);
 
         // 실제 데이터
         JobDto jobDto1 = new JobDto(null, "넥슨", "QA", "https://www.nexongames.co.kr/", false);
@@ -121,8 +126,6 @@ class JobControllerTest {
     @Transactional
     void 공고id로_삭제_성공_() {
         // 예상 데이터
-        Long id = 3L;
-        Long deletedId = 4L;
         JobDto jobDto = new JobDto(null, "넥슨", "QA", "https://www.nexongames.co.kr/", false);
         Job saved = jobRepository.save(jobDto.toEntity());
 
@@ -130,8 +133,8 @@ class JobControllerTest {
 
         jobRepository.delete(deleted);
         // 실제 데이터
-        Job actual = jobRepository.findById(id).orElse(null);
-        Job deletedActual = jobRepository.findById(deletedId).orElse(null);
+        Job actual = jobRepository.findById(saved.getId()).orElse(null);
+        Job deletedActual = jobRepository.findById(deleted.getId()).orElse(null);
         // 검증 처리
         assertThat(actual.toString()).isEqualTo(saved.toString());
         assertThat(deletedActual).isNull();
