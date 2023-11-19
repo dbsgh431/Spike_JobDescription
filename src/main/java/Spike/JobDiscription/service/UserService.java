@@ -16,6 +16,11 @@ public class UserService {
     private final UserRepository userRepository;
 
     public User signUp(UserDto userDto) {
+        User toEntity = userDto.toEntity();
+        User user = userRepository.findByEmail(toEntity.getEmail());
+        if (user != null) {
+            return null;
+        }
         return userRepository.save(userDto.toEntity());
     }
 
@@ -28,6 +33,4 @@ public class UserService {
         }
         return user;
     }
-
-
 }

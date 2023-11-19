@@ -45,11 +45,14 @@ public class HomeController {
     }
 
     @PostMapping("/jobs/signUp")
-    public String signUp(UserDto userDto) {
-        userService.signUp(userDto);
-        log.info("email={}", userDto.getEmail());
-        log.info("password={}", userDto.getPassword());
-        return "redirect:/jobs";
+    public String signUp(UserDto userDto, Model model) {
+        User user = userService.signUp(userDto);
+        if (user != null) {
+            return "redirect:/jobs";
+        } else {
+            model.addAttribute("exist", "이미 존재하는 회원 이메일입니다.");
+            return "signUp";
+        }
     }
 
     @GetMapping("/jobs/signUp")

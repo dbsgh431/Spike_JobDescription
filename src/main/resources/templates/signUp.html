@@ -10,7 +10,11 @@
 <body>
 <div th:insert="~{layouts/header :: header}"></div>
 <!---->
-
+<div th:if="${exist}">
+  <div class="alert alert-danger">
+    이미 존재하는 이메일입니다.
+  </div>
+</div>
 <form th:action="@{/jobs/signUp}" method="post" th:object="${userDto}">
   <div class="mb-3">
     <label class="form-label">가입할 이메일</label>
