@@ -1,14 +1,21 @@
 package Spike.JobDiscription.controller;
 
 import Spike.JobDiscription.dto.JobDto;
+import Spike.JobDiscription.dto.UserDto;
 import Spike.JobDiscription.entity.Job;
+import Spike.JobDiscription.entity.User;
 import Spike.JobDiscription.repository.JobRepository;
 import Spike.JobDiscription.service.JobService;
+import Spike.JobDiscription.web.SessionConst;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -21,12 +28,16 @@ public class JobController {
     private final JobService jobService;
 
 
-
     @GetMapping("/jobs")
-    public String jobs(Model model) {
+    public String jobs(Model model, HttpSession session) {
         List<Job> jobs = jobService.showAll();
         model.addAttribute("jobs", jobs);
-        return "home";
+        User user = (User) session.getAttribute(SessionConst.LOGIN_USER);
+        if (user == null) {
+            return "redirect:/";
+        }
+        model.addAttribute("user", user);
+        return "JDList";
     }
 
     @GetMapping("/jobs/add")

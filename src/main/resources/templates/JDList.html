@@ -9,10 +9,11 @@
 </head>
 <body>
 <div th:insert="~{layouts/header :: header}"></div>
-<table class="table">
+
+<table class="table table-bordered table-condensed">
     <thead>
     <tr>
-        <th scope="col">#</th>
+        <th scope="col" th:text="|${user.email}님의 관심공고|"></th>
         <th scope="col">회사 이름</th>
         <th scope="col">직무</th>
         <th scope="col">지원 여부</th>
