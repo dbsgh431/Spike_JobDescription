@@ -5,7 +5,6 @@ import Spike.JobDiscription.dto.UserDto;
 import Spike.JobDiscription.entity.User;
 import Spike.JobDiscription.service.UserService;
 import Spike.JobDiscription.web.SessionConst;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
-import java.net.http.HttpRequest;
+
 
 @Slf4j
 @Controller
