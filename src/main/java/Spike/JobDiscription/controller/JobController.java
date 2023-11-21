@@ -6,6 +6,7 @@ import Spike.JobDiscription.entity.Job;
 import Spike.JobDiscription.entity.User;
 import Spike.JobDiscription.repository.JobRepository;
 import Spike.JobDiscription.service.JobService;
+import Spike.JobDiscription.service.UserService;
 import Spike.JobDiscription.web.SessionConst;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -23,29 +24,31 @@ import java.util.List;
 public class JobController {
 
     private final JobService jobService;
+    private final UserService userService;
 
 
     @GetMapping()
     public String jobs(Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
-
-        List<Job> jobs = jobService.showAll();
-        model.addAttribute("jobs", jobs);
         if (loginUser == null) {
             return "redirect:/";
         }
+        List<Job> jobs = jobService.showAll(loginUser);
+        model.addAttribute("jobs", jobs);
         model.addAttribute("user", loginUser);
+        log.info(loginUser.toString());
         return "JDList";
     }
 
     @GetMapping("/add")
-    public String addJobForm(Model model) {
+    public String addJobForm(Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
         model.addAttribute("jobDto", new JobDto());
+        model.addAttribute("user", loginUser);
         return "addJob";
     }
 
     @PostMapping("/add")
-    public String addJob(@ModelAttribute JobDto dto) {
-        jobService.create(dto);
+    public String addJob(@ModelAttribute JobDto dto, @ModelAttribute("userDto") UserDto userDto) {
+        jobService.create(dto, userDto);
         return "redirect:/jobs";
     }
 
@@ -71,8 +74,8 @@ public class JobController {
     }
 
     @PostMapping("/update")
-    public String updateJob(JobDto dto, Model model) {
-        Job job = jobService.patch(dto);
+    public String updateJob(JobDto dto, Model model, UserDto userDto) {
+        Job job = jobService.patch(dto, userDto);
 
         if (job != null) {
             model.addAttribute("job", job);

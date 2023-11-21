@@ -43,6 +43,7 @@ public class HomeController {
 
         }
         session.setAttribute(SessionConst.LOGIN_USER, user);
+        model.addAttribute("userDto", userDto);
         return "redirect:/jobs";
     }
 

@@ -26,6 +26,11 @@ public class Job {
     @Column
     private Boolean isApply;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
     public void update(JobDto dto) {
         if (this.companyName != null) {
             this.companyName = dto.getCompanyName();

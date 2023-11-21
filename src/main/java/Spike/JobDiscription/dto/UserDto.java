@@ -10,12 +10,12 @@ import lombok.*;
 @ToString
 public class UserDto {
 
-    private Long userId;
+    private Long id;
     private String email;
     private String password;
 
     public User toEntity() {
-        return new User(userId, email, password);
+        return new User(id, email, password);
     }
 
 
