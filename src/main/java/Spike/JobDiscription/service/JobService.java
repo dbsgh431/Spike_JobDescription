@@ -27,8 +27,8 @@ public class JobService {
         return byUserId;
     }
 
-    public Job create(JobDto dto, UserDto userDto) {
-        User user = userRepository.findById(userDto.getId()).orElse(null);
+    public Job create(JobDto dto, User loginUser) {
+        User user = userRepository.findById(loginUser.getId()).orElse(null);
         Job job = dto.toEntity(user);
         return jobRepository.save(job);
     }

@@ -24,31 +24,25 @@ import java.util.List;
 public class JobController {
 
     private final JobService jobService;
-    private final UserService userService;
 
 
     @GetMapping()
     public String jobs(Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
-        if (loginUser == null) {
-            return "redirect:/";
-        }
         List<Job> jobs = jobService.showAll(loginUser);
         model.addAttribute("jobs", jobs);
         model.addAttribute("user", loginUser);
-        log.info(loginUser.toString());
         return "JDList";
     }
 
     @GetMapping("/add")
-    public String addJobForm(Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
+    public String addJobForm(Model model) {
         model.addAttribute("jobDto", new JobDto());
-        model.addAttribute("user", loginUser);
         return "addJob";
     }
 
     @PostMapping("/add")
-    public String addJob(@ModelAttribute JobDto dto, @ModelAttribute("userDto") UserDto userDto) {
-        jobService.create(dto, userDto);
+    public String addJob(@ModelAttribute JobDto dto,@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser ) {
+        jobService.create(dto, loginUser);
         return "redirect:/jobs";
     }
 

@@ -12,8 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
-
 
 
 @Slf4j
@@ -24,17 +22,17 @@ public class HomeController {
     private final UserService userService;
 
     @GetMapping("/")
-    public String home(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false)
-                           User loginUser, Model model) {
-        if (loginUser == null) {
-            model.addAttribute("userDto", new UserDto());
-            return "login";
-        }
+    public String home() {
         return "redirect:/jobs";
     }
 
+    @GetMapping("/login")
+    public String login(Model model) {
+        model.addAttribute("userDto", new UserDto());
+        return "login";
+    }
 
-    @PostMapping("/jobs/login")
+    @PostMapping("/login")
     public String login(UserDto userDto, Model model, HttpSession session) {
         User user = userService.signIn(userDto);
         if (user == null) {

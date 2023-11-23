@@ -12,7 +12,6 @@
 <!---->
 
 <form th:action="@{/jobs/add}" method="post" th:object="${jobDto}">
-    <input name="id" type="hidden" th:value="${user.id}">
     <div class="mb-3">
         <label class="form-label">회사 이름</label>
         <input type="text" class="form-control" th:field="*{companyName}">
