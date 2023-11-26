@@ -49,7 +49,8 @@ public class JobRepositoryImplMemory implements JobRepository {
     }
 
     @Override
-    public void clear() {
+    public void deleteAll() {
         store.clear();
     }
+
 }

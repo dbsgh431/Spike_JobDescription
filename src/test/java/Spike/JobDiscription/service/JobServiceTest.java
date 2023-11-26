@@ -18,11 +18,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 class JobServiceTest {
-    private final JobRepository jobRepository = new JobRepositoryImplMemory();
+    private JobRepository jobRepository = new JobRepositoryImplMemory();
 
     @AfterEach
     void afterEach() {
-        jobRepository.clear();
+        jobRepository.deleteAll();
     }
 
     @Test

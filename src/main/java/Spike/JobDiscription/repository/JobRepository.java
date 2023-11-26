@@ -17,7 +17,6 @@ public interface JobRepository {
 
     void delete(Job job);
 
-
-    void clear();
+    void deleteAll();
 
 }
