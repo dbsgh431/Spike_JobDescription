@@ -51,7 +51,7 @@ public class HomeController {
         return "redirect:/";
     }
 
-    @PostMapping("/jobs/signUp")
+    @PostMapping("/signUp")
     public String signUp(UserDto userDto, Model model) {
         User user = userService.signUp(userDto);
         if (user != null) {
@@ -62,7 +62,7 @@ public class HomeController {
         }
     }
 
-    @GetMapping("/jobs/signUp")
+    @GetMapping("/signUp")
     public String signUpForm(Model model) {
         model.addAttribute("userDto", new UserDto());
         return "signUp";

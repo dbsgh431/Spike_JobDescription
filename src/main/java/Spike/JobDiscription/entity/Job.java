@@ -2,16 +2,15 @@ package Spike.JobDiscription.entity;
 
 import Spike.JobDiscription.dto.JobDto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Getter
+@Setter // test 시에만 사용
+@EqualsAndHashCode
 public class Job {
 
     @Id
