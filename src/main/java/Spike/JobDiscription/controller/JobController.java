@@ -1,9 +1,11 @@
 package Spike.JobDiscription.controller;
 
 import Spike.JobDiscription.dto.JobDto;
+import Spike.JobDiscription.dto.UserDto;
 import Spike.JobDiscription.entity.Job;
-import Spike.JobDiscription.repository.JobRepository;
+import Spike.JobDiscription.entity.User;
 import Spike.JobDiscription.service.JobService;
+import Spike.JobDiscription.web.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -15,33 +17,33 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
+@RequestMapping("/jobs")
 public class JobController {
 
-    private final JobRepository jobRepository;
     private final JobService jobService;
 
 
-
-    @GetMapping("/jobs")
-    public String jobs(Model model) {
-        List<Job> jobs = jobService.showAll();
+    @GetMapping()
+    public String jobs(Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
+        List<Job> jobs = jobService.showAll(loginUser);
         model.addAttribute("jobs", jobs);
-        return "home";
+        model.addAttribute("user", loginUser);
+        return "JDList";
     }
 
-    @GetMapping("/jobs/add")
+    @GetMapping("/add")
     public String addJobForm(Model model) {
         model.addAttribute("jobDto", new JobDto());
         return "addJob";
     }
 
-    @PostMapping("/jobs/add")
-    public String addJob(@ModelAttribute JobDto dto) {
-        jobService.create(dto);
+    @PostMapping("/add")
+    public String addJob(@ModelAttribute JobDto dto,@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser ) {
+        jobService.create(dto, loginUser);
         return "redirect:/jobs";
     }
 
-    @GetMapping("/jobs/edit/{id}")
+    @GetMapping("/edit/{id}")
     public String editJob(@PathVariable("id") Long id, Model model) {
         Job job = jobService.showJob(id);
 
@@ -52,7 +54,7 @@ public class JobController {
         return "redirect:/jobs";
     }
 
-    @GetMapping("/jobs/update/{id}")
+    @GetMapping("/update/{id}")
     public String updateJobForm(@PathVariable("id") Long id, Model model) {
         Job job = jobService.showJob(id);
         if (job != null) {
@@ -62,9 +64,9 @@ public class JobController {
         return "redirect:/jobs";
     }
 
-    @PostMapping("/jobs/update")
-    public String updateJob(JobDto dto, Model model) {
-        Job job = jobService.patch(dto);
+    @PostMapping("/update")
+    public String updateJob(JobDto dto, Model model, UserDto userDto) {
+        Job job = jobService.patch(dto, userDto);
 
         if (job != null) {
             model.addAttribute("job", job);
@@ -73,7 +75,7 @@ public class JobController {
         return "redirect:/jobs";
     }
 
-    @GetMapping("/jobs/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteJob(@PathVariable("id") Long id) {
 
         if (jobService.delete(id)) {

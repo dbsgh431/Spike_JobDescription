@@ -1,13 +1,23 @@
 package Spike.JobDiscription.repository;
 
 import Spike.JobDiscription.entity.Job;
-import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
+public interface JobRepository {
 
-public interface JobRepository extends CrudRepository<Job, Long> {
-
-    @Override
     List<Job> findAll();
+
+    List<Job> findByUserId(Long userId);
+
+    Job save(Job job);
+
+    Optional<Job> findById(Long id);
+
+    void delete(Job job);
+
+
+    void clear();
+
 }
