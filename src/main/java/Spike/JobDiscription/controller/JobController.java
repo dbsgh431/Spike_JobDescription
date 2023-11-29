@@ -24,6 +24,10 @@ public class JobController {
 
     private final JobService jobService;
 
+    @ModelAttribute
+    public void displayUsername(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model) {
+        model.addAttribute("username", loginUser.getEmail());
+    }
 
     @GetMapping()
     public String jobs(Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
