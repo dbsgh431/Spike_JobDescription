@@ -8,10 +8,12 @@ import Spike.JobDiscription.service.JobService;
 import Spike.JobDiscription.web.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.datetime.standard.DateTimeFormatterFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -32,14 +34,16 @@ public class JobController {
     }
 
     @GetMapping("/add")
-    public String addJobForm(Model model) {
+    public String addJobForm(Job job, Model model) {
         model.addAttribute("jobDto", new JobDto());
         return "addJob";
     }
 
+    
     @PostMapping("/add")
-    public String addJob(@ModelAttribute JobDto dto,@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser ) {
+    public String addJob(@ModelAttribute JobDto dto, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
         jobService.create(dto, loginUser);
+
         return "redirect:/jobs";
     }
 
@@ -48,7 +52,11 @@ public class JobController {
         Job job = jobService.showJob(id);
 
         if (job != null) {
+            DateTimeFormatterFactory formatterFactory = new DateTimeFormatterFactory("yyyy-MM-dd");
+            String formattedPeriod = formatterFactory.createDateTimeFormatter().format(job.getPeriod());
+
             model.addAttribute("job", job);
+            model.addAttribute("period", formattedPeriod);
             return "editJob";
         }
         return "redirect:/jobs";
@@ -58,8 +66,12 @@ public class JobController {
     public String updateJobForm(@PathVariable("id") Long id, Model model) {
         Job job = jobService.showJob(id);
         if (job != null) {
+            DateTimeFormatterFactory formatterFactory = new DateTimeFormatterFactory("yyyy-MM-dd");
+            String formattedPeriod = formatterFactory.createDateTimeFormatter().format(job.getPeriod());
+
             model.addAttribute("jobDto", job);
-            return "updateJob";
+            model.addAttribute("period", formattedPeriod);
+            return "addJob";
         }
         return "redirect:/jobs";
     }

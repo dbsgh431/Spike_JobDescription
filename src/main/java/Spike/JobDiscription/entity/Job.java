@@ -4,6 +4,8 @@ import Spike.JobDiscription.dto.JobDto;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,6 +26,9 @@ public class Job {
     private String url;
     @Column
     private Boolean isApply;
+
+    @Column
+    private LocalDate period;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
