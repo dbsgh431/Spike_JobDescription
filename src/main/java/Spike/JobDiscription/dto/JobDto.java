@@ -5,6 +5,8 @@ import Spike.JobDiscription.entity.Job;
 import Spike.JobDiscription.entity.User;
 import lombok.*;
 
+import java.time.LocalDate;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,9 +21,12 @@ public class JobDto {
 
     private Boolean isApply;
 
+    private LocalDate period;
+
     private Long userId;
 
     public Job toEntity(User user) {
-        return new Job(id, companyName, position, url, isApply, user);
+
+        return new Job(id, companyName, position, url, isApply, period,user);
     }
 }

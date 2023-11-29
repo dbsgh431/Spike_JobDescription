@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,11 +19,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 class JobServiceTest {
-    private final JobRepository jobRepository = new JobRepositoryImplMemory();
+    private JobRepository jobRepository = new JobRepositoryImplMemory();
 
     @AfterEach
     void afterEach() {
-        jobRepository.clear();
+        jobRepository.deleteAll();
     }
 
     @Test
@@ -31,9 +32,9 @@ class JobServiceTest {
         User user1 = new User(1L, "dbsgh123@naver.com", "1234");
         User user2 = new User(2L, "dbsgh456@naver.com", "5678");
 
-        Job job1 = new Job(null, "네이버", "기획", "https://www.naver.com/", false, user1);
-        Job job2 = new Job(null, "넥슨", "QA", "https://www.nexon.com/", false, user2);
-        Job job3 = new Job(null, "구글", "DB", "https://www.google.com/", false, user2);
+        Job job1 = new Job(null, "네이버", "기획", "https://www.naver.com/", false, LocalDate.of(2023, 12, 12), user1);
+        Job job2 = new Job(null, "넥슨", "QA", "https://www.nexon.com/", false, LocalDate.of(2023, 12, 12),user2);
+        Job job3 = new Job(null, "구글", "DB", "https://www.google.com/", false, LocalDate.of(2023, 12, 12), user2);
 
         Job expected1 = jobRepository.save(job1);
         Job expected2 = jobRepository.save(job2);
@@ -52,15 +53,15 @@ class JobServiceTest {
     void 공고_생성() {
         // 예상 데이터
         User user1 = new User(null, "dbsgh123@naver.com", "1234");
-        Job expected1 = new Job(1L, "네이버", "기획", "https://www.naver.com/", false, user1);
-        Job expected2 = new Job(2L, "구글", "프론트엔드", "https://www.google.com/", false, user1);
+        Job expected1 = new Job(1L, "네이버", "기획", "https://www.naver.com/", false, LocalDate.of(2023, 12, 12), user1);
+        Job expected2 = new Job(2L, "구글", "프론트엔드", "https://www.google.com/", false, LocalDate.of(2023, 12, 12), user1);
 
 
         List<Job> expectedJobs = Arrays.asList(expected1, expected2);
 
         // 실제 데이터
-        Job actual1 = new Job(null, "네이버", "기획", "https://www.naver.com/", false, user1);
-        Job actual2 = new Job(null, "구글", "프론트엔드", "https://www.google.com/", false, user1);
+        Job actual1 = new Job(null, "네이버", "기획", "https://www.naver.com/", false,LocalDate.of(2023, 12, 12), user1);
+        Job actual2 = new Job(null, "구글", "프론트엔드", "https://www.google.com/", false, LocalDate.of(2023, 12, 12), user1);
         Job save1 = jobRepository.save(actual1);
         Job save2 = jobRepository.save(actual2);
         List<Job> actualJobs = Arrays.asList(save1, save2);
@@ -70,11 +71,10 @@ class JobServiceTest {
     }
 
     @Test
-
     void 게시글_id_로_조회() {
         // 예상 데이터
         User user1 = new User(null, "dbsgh123@naver.com", "1234");
-        Job job = new Job(null, "네이버", "기획", "https://www.naver.com/", false, user1);
+        Job job = new Job(null, "네이버", "기획", "https://www.naver.com/", false,LocalDate.of(2023, 12, 12) ,user1);
         Job expected = jobRepository.save(job);
         System.out.println("expected = " + expected);
         // 실제 데이터
