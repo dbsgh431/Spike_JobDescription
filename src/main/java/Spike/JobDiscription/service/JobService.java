@@ -39,9 +39,10 @@ public class JobService {
 
     public Job patch(JobDto dto, UserDto userDto) {
         User user = userRepositoryImplJpa.findByEmail(userDto.getEmail());
-        Job target = jobRepositoryImplJpa.findById(dto.toEntity(user).getId()).orElse(null);
+        Job job = dto.toEntity(user);
+        Job target = jobRepositoryImplJpa.findById(job.getId()).orElse(null);
         if (target != null) {
-            target.update(dto);
+            target.update(job);
             return jobRepositoryImplJpa.save(target);
         }
         return null;

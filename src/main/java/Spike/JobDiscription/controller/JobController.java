@@ -56,11 +56,11 @@ public class JobController {
         Job job = jobService.showJob(id);
 
         if (job != null) {
-            DateTimeFormatterFactory formatterFactory = new DateTimeFormatterFactory("yyyy-MM-dd");
-            String formattedPeriod = formatterFactory.createDateTimeFormatter().format(job.getPeriod());
+//            DateTimeFormatterFactory formatterFactory = new DateTimeFormatterFactory("yyyy-MM-dd");
+//            String formattedPeriod = formatterFactory.createDateTimeFormatter().format(job.getPeriod());
 
             model.addAttribute("job", job);
-            model.addAttribute("period", formattedPeriod);
+            //model.addAttribute("period", formattedPeriod);
             return "editJob";
         }
         return "redirect:/jobs";
@@ -70,11 +70,11 @@ public class JobController {
     public String updateJobForm(@PathVariable("id") Long id, Model model) {
         Job job = jobService.showJob(id);
         if (job != null) {
-            DateTimeFormatterFactory formatterFactory = new DateTimeFormatterFactory("yyyy-MM-dd");
-            String formattedPeriod = formatterFactory.createDateTimeFormatter().format(job.getPeriod());
+//            DateTimeFormatterFactory formatterFactory = new DateTimeFormatterFactory("yyyy-MM-dd");
+//            String formattedPeriod = formatterFactory.createDateTimeFormatter().format(job.getPeriod());
 
             model.addAttribute("jobDto", job);
-            model.addAttribute("period", formattedPeriod);
+//            model.addAttribute("period", formattedPeriod);
             return "updateJob";
         }
         return "redirect:/jobs";

@@ -3,6 +3,8 @@ package Spike.JobDiscription.entity;
 import Spike.JobDiscription.dto.JobDto;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.boot.convert.PeriodFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -35,16 +37,19 @@ public class Job {
     private User user;
 
 
-    public void update(JobDto dto) {
-        if (this.companyName != null) {
-            this.companyName = dto.getCompanyName();
+    public void update(Job job) {
+        if (job.companyName != null) {
+            this.companyName = job.companyName;
         }
-        if (this.position != null) {
-            this.position = dto.getPosition();
+        if (job.position != null) {
+            this.position = job.position;
         }
-        if (this.url != null) {
-            this.url = dto.getUrl();
+        if (job.url != null) {
+            this.url = job.url;
         }
-        this.isApply = dto.getIsApply();
+        
+        this.period = job.period;
+
+        this.isApply = job.isApply;
     }
 }
