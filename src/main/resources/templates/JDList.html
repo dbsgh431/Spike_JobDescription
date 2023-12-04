@@ -13,9 +13,10 @@
 <table class="table table-bordered table-condensed">
     <thead>
     <tr>
-        <th scope="col" th:text="|${user.email}님의 관심공고|"></th>
-        <th scope="col">회사 이름</th>
+        <th scope="col">번호</th>
+        <th scope="col">회사명</th>
         <th scope="col">직무</th>
+        <th scope="col">마감 기간</th>
         <th scope="col">지원 여부</th>
     </tr>
     </thead>
@@ -24,7 +25,8 @@
         <th scope="row" th:text="${jobStat.count}">index</th>
         <td><a th:href="@{|jobs/edit/${job.id}|}" th:text="${job.companyName}">회사명</a></td>
         <td th:text="${job.position}">직무</td>
-        <td th:text="${job.isApply} ? '지원 완료' : '' "></td>
+        <td th:text="${job.period}">마감 기간</td>
+        <td th:text="${job.isApply} ? '지원 완료' : '' ">지원 여부</td>
     </tr>
     </tbody>
 </table>
