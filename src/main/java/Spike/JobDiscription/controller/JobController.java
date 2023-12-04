@@ -75,7 +75,7 @@ public class JobController {
 
             model.addAttribute("jobDto", job);
             model.addAttribute("period", formattedPeriod);
-            return "editJob";
+            return "updateJob";
         }
         return "redirect:/jobs";
     }
