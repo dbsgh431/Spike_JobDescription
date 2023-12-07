@@ -1,0 +1,28 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>마이잡디</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+<div th:insert="~{layouts/header :: header}"></div>
+<!---->
+<div th:object="${job}">
+<form th:action="@{|/jobs/${job.id}/questions/add|}" method="post" th:object="${questions}">
+  <div class="mb-3">
+    <label class="form-label">질문 제목</label>
+    <input type="text" class="form-control" th:field="*{question}" required>
+    <input type="hidden" th:field="*{job}">
+  </div>
+  <br/>
+  <button type="submit" class="btn btn-primary">등록</button>
+</form></div>
+
+
+<!---->
+<div th:insert="~{layouts/footer :: footer}"></div>
+</body>
+</html>

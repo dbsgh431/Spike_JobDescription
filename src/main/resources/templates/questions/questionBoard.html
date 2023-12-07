@@ -1,0 +1,35 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>마이잡디</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+<div th:insert="~{layouts/header :: header}"></div>
+<!---->
+<table class="table table-bordered table-condensed table-striped table-hover">
+    <thead>
+    <tr>
+        <th scope="col">번호</th>
+        <th scope="col">질문</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="question : ${questions}">
+        <th scope="row" th:text="${questionStat.count}">index</th>
+        <td><a th:href="@{|/jobs/${job.id}/${question.id}/answer|}" th:text="${question.question}">질문</a></td>
+    </tr>
+    </tbody>
+</table>
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a class="btn btn-primary" th:href="@{|/jobs/${job.id}/questions/add|}" role="button">후기 작성</a>
+    <a class="btn btn-primary" href="/jobs" role="button">목록으로</a>
+</div>
+
+<!---->
+<div th:insert="~{layouts/footer :: footer}"></div>
+</body>
+</html>
