@@ -8,12 +8,10 @@ import Spike.JobDiscription.service.JobService;
 import Spike.JobDiscription.web.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.format.datetime.standard.DateTimeFormatterFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -25,7 +23,7 @@ public class JobController {
     private final JobService jobService;
 
     @ModelAttribute
-    public void displayUsername(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model) {
+    public void Username(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model) {
         model.addAttribute("username", loginUser.getEmail());
     }
 
@@ -34,16 +32,16 @@ public class JobController {
         List<Job> jobs = jobService.showAll(loginUser);
         model.addAttribute("jobs", jobs);
         model.addAttribute("user", loginUser);
-        return "JDList";
+        return "jobs/JDList";
     }
 
     @GetMapping("/add")
-    public String addJobForm(Job job, Model model) {
+    public String JobForm(Job job, Model model) {
         model.addAttribute("jobDto", new JobDto());
-        return "addJob";
+        return "jobs/addJob";
     }
 
-    
+
     @PostMapping("/add")
     public String addJob(@ModelAttribute JobDto dto, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
         jobService.create(dto, loginUser);
@@ -52,16 +50,12 @@ public class JobController {
     }
 
     @GetMapping("/edit/{id}")
-    public String editJob(@PathVariable("id") Long id, Model model) {
+    public String editJobForm(@PathVariable("id") Long id, Model model) {
         Job job = jobService.showJob(id);
 
         if (job != null) {
-//            DateTimeFormatterFactory formatterFactory = new DateTimeFormatterFactory("yyyy-MM-dd");
-//            String formattedPeriod = formatterFactory.createDateTimeFormatter().format(job.getPeriod());
-
             model.addAttribute("job", job);
-            //model.addAttribute("period", formattedPeriod);
-            return "editJob";
+            return "jobs/editJob";
         }
         return "redirect:/jobs";
     }
@@ -70,12 +64,8 @@ public class JobController {
     public String updateJobForm(@PathVariable("id") Long id, Model model) {
         Job job = jobService.showJob(id);
         if (job != null) {
-//            DateTimeFormatterFactory formatterFactory = new DateTimeFormatterFactory("yyyy-MM-dd");
-//            String formattedPeriod = formatterFactory.createDateTimeFormatter().format(job.getPeriod());
-
             model.addAttribute("jobDto", job);
-//            model.addAttribute("period", formattedPeriod);
-            return "updateJob";
+            return "jobs/updateJob";
         }
         return "redirect:/jobs";
     }
@@ -97,7 +87,7 @@ public class JobController {
         if (jobService.delete(id)) {
             return "redirect:/jobs";
         }
-        return "editJob";
+        return "jobs/editJob";
 
     }
 }

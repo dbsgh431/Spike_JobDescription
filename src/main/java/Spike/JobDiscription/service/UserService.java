@@ -13,21 +13,21 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
 
-    private final UserRepositoryImplJpa userRepositoryImplJpa;
+    private final UserRepositoryImplJpa userRepository;
 
     public User signUp(UserDto userDto) {
         User toEntity = userDto.toEntity();
-        User user = userRepositoryImplJpa.findByEmail(toEntity.getEmail());
+        User user = userRepository.findByEmail(toEntity.getEmail());
         if (user != null) {
             return null;
         }
-        return userRepositoryImplJpa.save(userDto.toEntity());
+        return userRepository.save(userDto.toEntity());
     }
 
     public User signIn(UserDto userDto) {
         log.info(userDto.toString());
         User toEntity = userDto.toEntity();
-        User user = userRepositoryImplJpa.findByEmail(toEntity.getEmail());
+        User user = userRepository.findByEmail(toEntity.getEmail());
         if (user == null || !userDto.toEntity().checkPassword(user.getPassword())) {
             return null;
         }

@@ -18,40 +18,40 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JobService {
 
-    private final JobRepositoryImplJpa jobRepositoryImplJpa;
-    private final UserRepositoryImplJpa userRepositoryImplJpa;
+    private final JobRepositoryImplJpa jobRepository;
+    private final UserRepositoryImplJpa userRepository;
 
     public List<Job> showAll(User loginUser) {
-        User user = userRepositoryImplJpa.findById(loginUser.getId()).orElse(null);
-        List<Job> byUserId = jobRepositoryImplJpa.findByUserId(user.getId());
+        User user = userRepository.findById(loginUser.getId()).orElse(null);
+        List<Job> byUserId = jobRepository.findByUserId(user.getId());
         return byUserId;
     }
 
     public Job create(JobDto dto, User loginUser) {
-        User user = userRepositoryImplJpa.findById(loginUser.getId()).orElse(null);
+        User user = userRepository.findById(loginUser.getId()).orElse(null);
         Job job = dto.toEntity(user);
-        return jobRepositoryImplJpa.save(job);
+        return jobRepository.save(job);
     }
 
     public Job showJob(Long id) {
-        return jobRepositoryImplJpa.findById(id).orElse(null);
+        return jobRepository.findById(id).orElse(null);
     }
 
     public Job patch(JobDto dto, UserDto userDto) {
-        User user = userRepositoryImplJpa.findByEmail(userDto.getEmail());
+        User user = userRepository.findByEmail(userDto.getEmail());
         Job job = dto.toEntity(user);
-        Job target = jobRepositoryImplJpa.findById(job.getId()).orElse(null);
+        Job target = jobRepository.findById(job.getId()).orElse(null);
         if (target != null) {
             target.update(job);
-            return jobRepositoryImplJpa.save(target);
+            return jobRepository.save(target);
         }
         return null;
     }
 
     public boolean delete(Long id) {
-        Job target = jobRepositoryImplJpa.findById(id).orElse(null);
+        Job target = jobRepository.findById(id).orElse(null);
         if (target != null) {
-            jobRepositoryImplJpa.delete(target);
+            jobRepository.delete(target);
             return true;
         }
         return false;

@@ -25,7 +25,7 @@
         <th scope="row" th:text="${jobStat.count}">index</th>
         <td><a th:href="@{|jobs/edit/${job.id}|}" th:text="${job.companyName}">회사명</a></td>
         <td th:text="${job.position}">직무</td>
-        <td th:text="${job.period}">마감 기간</td>
+        <td th:text="${job.period} ? ${job.period} : '수시 채용'">마감 기간</td>
         <td th:text="${job.isApply} ? '지원 완료' : '' ">지원 여부</td>
     </tr>
     </tbody>

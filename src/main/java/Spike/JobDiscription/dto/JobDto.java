@@ -27,6 +27,6 @@ public class JobDto {
 
     public Job toEntity(User user) {
 
-        return new Job(id, companyName, position, url, isApply, period,user);
+        return new Job(id, companyName, position, url, isApply, period, user);
     }
 }
