@@ -5,6 +5,7 @@ import Spike.JobDiscription.dto.JobDto;
 import Spike.JobDiscription.dto.UserDto;
 import Spike.JobDiscription.entity.Job;
 import Spike.JobDiscription.entity.User;
+import Spike.JobDiscription.repository.CoverLetterRepositoryImplJpa;
 import Spike.JobDiscription.repository.JobRepositoryImplJpa;
 import Spike.JobDiscription.repository.UserRepositoryImplJpa;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,8 @@ public class JobService {
 
     private final JobRepositoryImplJpa jobRepository;
     private final UserRepositoryImplJpa userRepository;
+
+    private final CoverLetterRepositoryImplJpa coverLetterRepository;
 
     public List<Job> showAll(User loginUser) {
         User user = userRepository.findById(loginUser.getId()).orElse(null);
@@ -51,6 +54,7 @@ public class JobService {
     public boolean delete(Long id) {
         Job target = jobRepository.findById(id).orElse(null);
         if (target != null) {
+            coverLetterRepository.deleteById(target.getId());
             jobRepository.delete(target);
             return true;
         }

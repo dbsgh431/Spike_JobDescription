@@ -26,6 +26,7 @@ public interface JobRepositoryImplJpa extends CrudRepository<Job, Long>, JobRepo
     @Override
     void delete(Job entity);
 
+    @Override
     @Query(value = "SELECT * FROM job WHERE user_id = :userId", nativeQuery = true)
     List<Job> findByUserId(@Param("userId") Long userId);
 }

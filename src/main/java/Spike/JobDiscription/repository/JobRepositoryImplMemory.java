@@ -1,7 +1,6 @@
 package Spike.JobDiscription.repository;
 
 import Spike.JobDiscription.entity.Job;
-import Spike.JobDiscription.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

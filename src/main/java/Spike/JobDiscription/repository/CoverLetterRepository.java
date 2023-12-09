@@ -16,4 +16,6 @@ public interface CoverLetterRepository {
 
     List<CoverLetter> findByJobId(Long jobId);
 
+    void deleteByJobId(Long jobId);
+
 }
