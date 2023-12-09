@@ -37,6 +37,8 @@ public class Job {
     private User user;
 
 
+
+
     public void update(Job job) {
         if (job.companyName != null) {
             this.companyName = job.companyName;

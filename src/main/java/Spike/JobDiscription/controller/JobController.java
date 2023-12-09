@@ -22,8 +22,9 @@ public class JobController {
 
     private final JobService jobService;
 
+    // 상단 네비게이션 바에 로그인한 유저 데이터 처리를 위한 모델
     @ModelAttribute
-    public void Username(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model) {
+    public void usernameToNavbar(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model) {
         model.addAttribute("username", loginUser.getEmail());
     }
 

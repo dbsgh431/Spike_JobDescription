@@ -14,18 +14,18 @@
     <thead>
     <tr>
         <th scope="col">번호</th>
-        <th scope="col">질문</th>
+        <th scope="col">자소서 제목</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="question : ${questions}">
-        <th scope="row" th:text="${questionStat.count}">index</th>
-        <td><a th:href="@{|/jobs/${job.id}/${question.id}/answer|}" th:text="${question.question}">질문</a></td>
+    <tr th:each="coverLetter : ${coverLetters}">
+        <th scope="row" th:text="${coverLetterStat.count}">index</th>
+        <td><a th:href="@{|/jobs/${job.id}/${coverLetter.id}/answer|}" th:text="${coverLetter.title}">내용</a></td>
     </tr>
     </tbody>
 </table>
 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-    <a class="btn btn-primary" th:href="@{|/jobs/${job.id}/questions/add|}" role="button">후기 작성</a>
+    <a class="btn btn-primary" th:href="@{|/jobs/add/coverLetters/${job.id}|}" role="button">자소서 작성</a>
     <a class="btn btn-primary" href="/jobs" role="button">목록으로</a>
 </div>
 

@@ -10,12 +10,15 @@
 <body>
 <div th:insert="~{layouts/header :: header}"></div>
 <!---->
-<div th:object="${job}">
-<form th:action="@{|/jobs/${job.id}/questions/add|}" method="post" th:object="${questions}">
+
+<form th:action="@{|/jobs/add/coverLetters/${job.id}|}" method="post" th:object="${coverLetters}">
   <div class="mb-3">
-    <label class="form-label">질문 제목</label>
-    <input type="text" class="form-control" th:field="*{question}" required>
-    <input type="hidden" th:field="*{job}">
+    <label class="form-label">자소서 제목</label>
+    <input type="text" class="form-control" th:field="*{title}" required>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">내용</label>
+    <input type="text" class="form-control" th:field="*{content}" required>
   </div>
   <br/>
   <button type="submit" class="btn btn-primary">등록</button>
