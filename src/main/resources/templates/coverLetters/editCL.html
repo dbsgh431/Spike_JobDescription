@@ -15,7 +15,7 @@
 
 <form th:action="@{|/jobs/edit/coverLetters/${job.id}/${coverLetters.id}|}" method="post" th:object="${coverLetters}">
     <div class="mb-3">
-        <label class="form-label">항목 이름</label>
+        <label class="form-label">항목</label>
         <input type="text" class="form-control" th:field="*{title}" required>
     </div>
     <div class="mb-3">
