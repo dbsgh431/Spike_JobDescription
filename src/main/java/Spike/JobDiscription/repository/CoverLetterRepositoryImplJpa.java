@@ -15,11 +15,11 @@ public interface CoverLetterRepositoryImplJpa extends CrudRepository<CoverLetter
     CoverLetter save(CoverLetter CoverLetter);
 
     @Override
-    @Query(value = "SELECT * FROM COVER_LETTER WHERE job_Id = :jobId", nativeQuery = true)
+    @Query(value = "SELECT * FROM cover_letter WHERE job_Id = :jobId", nativeQuery = true)
     List<CoverLetter> findByJobId(@Param("jobId") Long jobId);
 
     @Override
-    @Query(value = "DELETE FROM COVER_LETTER WHERE job_Id = :jobId", nativeQuery = true)
+    @Query(value = "DELETE FROM cover_letter WHERE job_Id = :jobId", nativeQuery = true)
     void deleteByJobId(@Param("jobId") Long jobId);
 
     @Override
