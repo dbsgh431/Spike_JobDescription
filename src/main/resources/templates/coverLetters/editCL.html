@@ -1,0 +1,64 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>마이잡디</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+</head>
+<body>
+<div th:insert="~{layouts/header :: header}"></div>
+<!---->
+
+<form th:action="@{|/jobs/edit/coverLetters/${job.id}/${coverLetters.id}|}" method="post" th:object="${coverLetters}">
+    <div class="mb-3">
+        <label class="form-label">항목 이름</label>
+        <input type="text" class="form-control" th:field="*{title}" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">내용</label>
+        <textarea type="text" class="form-control" id="content" oninput="updateCharacterCount()" th:field="*{content}"
+                  rows="7" required></textarea>
+    </div>
+    <br>
+    <div id="characterCount">글자 수 : 0</div>
+    <br/>
+    <button type="submit" class="btn btn-primary">수정</button>
+    <a class="btn btn-primary" th:href="@{|/jobs/delete/coverLetters/${job.id}/${coverLetters.id}|}" role="button">삭제</a>
+    <a class="btn btn-primary" th:href="@{|/jobs/coverLetters/${job.id}|}" role="button">목록으로</a>
+</form>
+</div>
+<script>
+    function updateCharacterCount() {
+        var content = document.getElementById("content").value;
+        var characterCount = content.length;
+        document.getElementById("characterCount").innerText = "글자 수: " + characterCount;
+
+        // Ajax를 사용하여 서버로 실시간 업데이트
+        $.ajax({
+            type: "POST",
+            url: "/updateCharacterCount",
+            contentType: "application/json;charset=UTF-8",
+            data: JSON.stringify({ characterCount: characterCount }),
+            success: function(response) {
+                console.log("Server response: " + response);
+            },
+            error: function(error) {
+                console.error("Error: " + JSON.stringify(error));
+            }
+        });
+    }
+    // 페이지 로드 시 한 번 실행
+    $(document).ready(function() {
+        updateCharacterCount();
+    });
+</script>
+
+
+<!---->
+<div th:insert="~{layouts/footer :: footer}"></div>
+</body>
+</html>
