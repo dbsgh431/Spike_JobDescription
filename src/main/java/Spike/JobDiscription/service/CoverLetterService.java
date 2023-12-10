@@ -29,27 +29,37 @@ public class CoverLetterService {
 
     @Transactional
     public CoverLetter create(CoverLetterDto dto, Long jobId) {
-        Job job = jobRepository.findById(jobId).orElse(null);
+        Job job = jobRepository.findById(jobId).orElseThrow(() -> new IllegalArgumentException());
         CoverLetter coverLetter = dto.toEntity(job);
         CoverLetter saved = coverLetterRepository.save(coverLetter);
         return saved;
     }
 
     public boolean remove(Long coverLettersId) {
-        CoverLetter coverLetter = coverLetterRepository.findById(coverLettersId).orElse(null);
-        if (coverLetter != null) {
-            coverLetterRepository.delete(coverLetter);
-            return true;
-        }
-        return false;
+        CoverLetter coverLetter = coverLetterRepository.findById(coverLettersId).orElseThrow(() -> new IllegalArgumentException());
+        coverLetterRepository.delete(coverLetter);
+        return true;
+
     }
 
-    public boolean checkUser(Long jobId, User loginUser) {
+    public CoverLetter update(Long jobId, CoverLetterDto dto, Long coverLettersId) {
+        Job job = jobRepository.findById(jobId).orElseThrow(() -> new IllegalArgumentException());
+        CoverLetter target = coverLetterRepository.findById(coverLettersId).orElseThrow(() -> new IllegalArgumentException());
+        target.patch(dto.toEntity(job));
+        return coverLetterRepository.save(target);
+    }
+
+    public boolean isCorrectUser(Long jobId, User loginUser) {
         Job job = jobRepository.findById(jobId).orElse(null);
         log.info("회원={}", loginUser);
         if (job.getUser().equals(loginUser)) {
             return true;
         }
         return false;
+    }
+
+    public CoverLetter show(Long coverLettersId) {
+        CoverLetter coverLetter = coverLetterRepository.findById(coverLettersId).orElseThrow(() -> new IllegalArgumentException());
+        return  coverLetter;
     }
 }

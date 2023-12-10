@@ -20,7 +20,7 @@
     <tbody>
     <tr th:each="coverLetter : ${coverLetters}">
         <th scope="row" th:text="${coverLetterStat.count}">index</th>
-        <td><a th:href="@{|/jobs/edit/${job.id}/${coverLetter.id}|}" th:text="${coverLetter.title}">내용</a></td>
+        <td><a th:href="@{|/jobs/edit/coverLetters/${job.id}/${coverLetter.id}|}" th:text="${coverLetter.title}">내용</a></td>
     </tr>
     </tbody>
 </table>

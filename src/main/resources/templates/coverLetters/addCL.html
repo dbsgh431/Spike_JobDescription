@@ -18,12 +18,35 @@
   </div>
   <div class="mb-3">
     <label class="form-label">내용</label>
-    <input type="text" class="form-control" th:field="*{content}" required>
+    <textarea type="text" class="form-control" id="content" oninput="updateCharacterCount()" th:field="*{content}"
+              rows="7" required></textarea>
   </div>
+  <br>
+  <div id="characterCount">글자 수 : 0</div>
   <br/>
   <button type="submit" class="btn btn-primary">등록</button>
 </form></div>
+<script>
+    function updateCharacterCount() {
+        var content = document.getElementById("content").value;
+        var characterCount = content.length;
+        document.getElementById("characterCount").innerText = "글자 수: " + characterCount;
 
+        // Ajax를 사용하여 서버로 실시간 업데이트
+        $.ajax({
+            type: "POST",
+            url: "/updateCharacterCount",
+            contentType: "application/json;charset=UTF-8",
+            data: JSON.stringify({ characterCount: characterCount }),
+            success: function(response) {
+                console.log("Server response: " + response);
+            },
+            error: function(error) {
+                console.error("Error: " + JSON.stringify(error));
+            }
+        });
+    }
+</script>
 
 <!---->
 <div th:insert="~{layouts/footer :: footer}"></div>
