@@ -14,9 +14,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
+    @Column(length = 25)
     private String email;
-    @Column
+    @Column(length = 12)
     private String password;
 
     public boolean checkPassword(String password) {

@@ -11,6 +11,7 @@ import Spike.JobDiscription.repository.UserRepositoryImplJpa;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class JobService {
         List<Job> byUserId = jobRepository.findByUserId(user.getId());
         return byUserId;
     }
-
+    @Transactional
     public Job create(JobDto dto, User loginUser) {
         User user = userRepository.findById(loginUser.getId()).orElse(null);
         Job job = dto.toEntity(user);
@@ -40,6 +41,7 @@ public class JobService {
         return jobRepository.findById(id).orElse(null);
     }
 
+    @Transactional
     public Job patch(JobDto dto, UserDto userDto) {
         User user = userRepository.findByEmail(userDto.getEmail());
         Job job = dto.toEntity(user);
@@ -50,7 +52,7 @@ public class JobService {
         }
         return null;
     }
-
+    @Transactional
     public boolean delete(Long id) {
         Job target = jobRepository.findById(id).orElse(null);
         if (target != null) {

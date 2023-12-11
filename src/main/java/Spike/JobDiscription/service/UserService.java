@@ -7,6 +7,7 @@ import Spike.JobDiscription.repository.UserRepositoryImplJpa;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserRepositoryImplJpa userRepository;
-
+    @Transactional
     public User signUp(UserDto userDto) {
         User toEntity = userDto.toEntity();
         User user = userRepository.findByEmail(toEntity.getEmail());

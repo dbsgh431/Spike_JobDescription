@@ -3,7 +3,6 @@ package Spike.JobDiscription.dto;
 
 import Spike.JobDiscription.entity.CoverLetter;
 import Spike.JobDiscription.entity.Job;
-import Spike.JobDiscription.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

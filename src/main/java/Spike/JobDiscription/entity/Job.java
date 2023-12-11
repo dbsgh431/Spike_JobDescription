@@ -1,12 +1,11 @@
 package Spike.JobDiscription.entity;
 
-import Spike.JobDiscription.dto.JobDto;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.boot.convert.PeriodFormat;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+
+import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
 @NoArgsConstructor
@@ -20,9 +19,9 @@ public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
+    @Column(length = 25)
     private String companyName;
-    @Column
+    @Column(length = 25)
     private String position;
     @Column
     private String url;
@@ -32,7 +31,7 @@ public class Job {
     @Column
     private LocalDate period;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 

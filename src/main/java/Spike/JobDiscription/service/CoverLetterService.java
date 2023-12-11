@@ -34,14 +34,14 @@ public class CoverLetterService {
         CoverLetter saved = coverLetterRepository.save(coverLetter);
         return saved;
     }
-
+    @Transactional
     public boolean remove(Long coverLettersId) {
         CoverLetter coverLetter = coverLetterRepository.findById(coverLettersId).orElseThrow(() -> new IllegalArgumentException());
         coverLetterRepository.delete(coverLetter);
         return true;
 
     }
-
+    @Transactional
     public CoverLetter update(Long jobId, CoverLetterDto dto, Long coverLettersId) {
         Job job = jobRepository.findById(jobId).orElseThrow(() -> new IllegalArgumentException());
         CoverLetter target = coverLetterRepository.findById(coverLettersId).orElseThrow(() -> new IllegalArgumentException());

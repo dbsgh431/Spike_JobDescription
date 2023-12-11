@@ -16,10 +16,11 @@ public class CoverLetter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(length = 50)
     private String title;
 
-    @Column
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     @ManyToOne(fetch = LAZY)
