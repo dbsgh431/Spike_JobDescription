@@ -1,5 +1,4 @@
-# toyproject
-개인 별 공고 북마크 게시판 개인 프로젝트. (Java + Spring Boot + Spring Data JPA)
+## 개인 별 취업 공고 스크랩 웹 프로젝트. (Java + Spring Boot + Spring Data JPA)
 
 
 ## Tech Stacks
@@ -8,12 +7,24 @@
 ![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
 ![Thymeleaf](https://img.shields.io/badge/Thymeleaf-%23005C0F.svg?style=for-the-badge&logo=Thymeleaf&logoColor=white)
 
-## 💻 IDEs/Editors
-![IntelliJ IDEA](https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)
-## 🗄️ Servers
-![Apache](https://img.shields.io/badge/apache-%23D42029.svg?style=for-the-badge&logo=apache&logoColor=white)
-## 🕓 Version Control
-![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
-
 
 ## 프로젝트 설명
+<aside>
+💻 개인 별 취업 공고 저장, 관리를 위한 웹 개인 프로젝트
+
+</aside>
+
+| 작업 기간 &nbsp;&nbsp;| 2023. 11 ~ 2023.12  |
+| :--- | :--- |
+| 인원 &nbsp;&nbsp;| 1명 |
+| 프로젝트 목적 &nbsp;&nbsp;| 스프링 부트와 JPA를 통한 CRUD 프로젝트 적용 및 서버 배포 학습 |
+| 주요 기능 &nbsp;&nbsp;| 회원 별 취업 공고 스크랩 게시판 CRUD 기능</br>회원 등록 및 로그인 - 회원 가입 및 로그인 </br> 회원 등록 및 로그인 시 중복  검사 </br>스크랩한 공고에 대한 자기소개서 항목 별 CRUD 및 글자 수 체크 기능 |
+| 사용 언어 &nbsp;&nbsp;| Java 17 |
+| 개발 환경 &nbsp;&nbsp;| SpringBoot 3.1.5, gradle 8.3 , JPA(Spring Data JPA), Thymeleaf, MySQL 8.0.31, GCP |
+| 저장소 &nbsp;&nbsp;&nbsp;&nbsp;| https://github.com/dbsgh431/Spike_JobDiscription |
+
+## 프로젝트 구조
+![마이잡디_아키텍쳐](https://github.com/dbsgh431/Spike_JobDiscription/assets/39187226/2280e6ec-1bfc-44f6-8d38-209eea3d70e8)
+
+## ERD
+![마이잡디_ERD](https://github.com/dbsgh431/Spike_JobDiscription/assets/39187226/11cfe28e-7fef-4ad1-8666-65ddba5979b9)
