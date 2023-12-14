@@ -37,7 +37,7 @@ public class JobController {
     }
 
     @GetMapping("/add")
-    public String JobForm(Job job, Model model) {
+    public String jobForm(Job job, Model model) {
         model.addAttribute("jobDto", new JobDto());
         return "jobs/addJob";
     }
@@ -65,7 +65,7 @@ public class JobController {
     public String updateJobForm(@PathVariable("id") Long id, Model model) {
         Job job = jobService.showJob(id);
         if (job != null) {
-            model.addAttribute("jobDto", job);
+            model.addAttribute("job", job);
             return "jobs/updateJob";
         }
         return "redirect:/jobs";
@@ -82,10 +82,10 @@ public class JobController {
         return "redirect:/jobs";
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteJob(@PathVariable("id") Long id) {
+    @PostMapping("/delete")
+    public String deleteJob(Job job) {
 
-        if (jobService.delete(id)) {
+        if (jobService.delete(job.getId())) {
             return "redirect:/jobs";
         }
         return "jobs/editJob";

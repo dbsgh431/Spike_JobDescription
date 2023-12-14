@@ -12,15 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CoverLetterDto {
 
-
+    private Long id;
     private String title;
     private String content;
 
-    private Long job_id;
-
-    private Long user_id;
+    //private Long job_id;
 
     public CoverLetter toEntity(Job job) {
-        return new CoverLetter(null, title, content, job, job.getUser());
+        return new CoverLetter(null, title, content, job);
     }
 }

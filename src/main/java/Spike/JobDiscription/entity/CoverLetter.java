@@ -1,6 +1,7 @@
 package Spike.JobDiscription.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,20 +17,21 @@ public class CoverLetter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "항목 이름은 필수 입력 값입니다.")
     @Column(length = 50)
     private String title;
 
-    @Lob
-    @Column(columnDefinition = "TEXT")
+    @NotBlank(message = "자기소개서 내용은 필수 입력 값입니다.")
+    @Column(length = 1500)
     private String content;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "job_id")
     private Job job;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+//    @ManyToOne(fetch = LAZY)
+//    @JoinColumn(name = "user_id")
+//    private User user;
 
     public void patch(CoverLetter coverLetter) {
         if (coverLetter.getTitle() != null) {

@@ -1,6 +1,7 @@
 package Spike.JobDiscription.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -19,10 +20,15 @@ public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "기업명은 필수 입력 값입니다.")
     @Column(length = 25)
     private String companyName;
+    @NotBlank(message = "직무는 필수 입력 값입니다.")
     @Column(length = 25)
     private String position;
+
+    @NotBlank(message = "페이지 주소는 필수 입력 값입니다.")
     @Column
     private String url;
     @Column

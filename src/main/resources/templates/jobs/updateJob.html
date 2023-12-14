@@ -11,7 +11,7 @@
 <div th:insert="~{layouts/header :: header}"></div>
 <!---->
 
-<form th:object="${jobDto}" method="post" th:action="@{|/jobs/update|}">
+<form th:object="${job}" method="post" th:action="@{|/jobs/update|}">
   <input name="id" type="hidden" th:value="*{id}">
   <div class="mb-3">
     <label class="form-label">회사 이름</label>

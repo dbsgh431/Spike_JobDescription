@@ -13,7 +13,8 @@
 <div th:insert="~{layouts/header :: header}"></div>
 <!---->
 
-<form th:action="@{|/jobs/edit/coverLetters/${job.id}/${coverLetters.id}|}" method="post" th:object="${coverLetters}">
+<form th:object="${coverLetterDto}" th:action="@{|/jobs/edit/coverLetters/${job.id}|}" method="post">
+    <input name="id" type="hidden" th:value="*{id}">
     <div class="mb-3">
         <label class="form-label">항목</label>
         <input type="text" class="form-control" th:field="*{title}" required>
@@ -26,11 +27,18 @@
     <br>
     <div id="characterCount">글자 수 : 0</div>
     <br/>
-    <button type="submit" class="btn btn-primary">수정</button>
-    <a class="btn btn-primary" th:href="@{|/jobs/delete/coverLetters/${job.id}/${coverLetters.id}|}" role="button">삭제</a>
-    <a class="btn btn-primary" th:href="@{|/jobs/coverLetters/${job.id}|}" role="button">목록으로</a>
+    <div class="mb-3 d-grid gap-2 d-md-flex justify-content-md-end">
+        <button type="submit" class="btn btn-success">수정하기</button>
+    </div>
 </form>
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <form th:action="@{|/jobs/delete/coverLetters/${job.id}|}" th:object="${coverLetterDto}" method="post">
+        <input name="id" type="hidden" th:value="*{id}">
+        <button type="submit" class="btn btn-primary">삭제하기</button>
+    </form>
+    <a class="btn btn-primary" th:href="@{|/jobs/coverLetters/${job.id}|}" role="button">목록으로</a>
 </div>
+
 <script>
     function updateCharacterCount() {
         var content = document.getElementById("content").value;
@@ -55,6 +63,8 @@
     $(document).ready(function() {
         updateCharacterCount();
     });
+
+
 </script>
 
 

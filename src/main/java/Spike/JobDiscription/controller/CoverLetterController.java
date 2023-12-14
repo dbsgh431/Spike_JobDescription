@@ -69,28 +69,30 @@ public class CoverLetterController {
     public String editForm(@PathVariable Long coverLettersId, @PathVariable Long jobId, Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, CoverLetterDto dto) {
         if (coverLetterService.isCorrectUser(jobId, loginUser)) {
             CoverLetter coverLetter = coverLetterService.show(coverLettersId);
-            model.addAttribute("coverLetters", coverLetter);
+            model.addAttribute("coverLetterDto", new CoverLetterDto(coverLetter.getId(), coverLetter.getTitle(), coverLetter.getContent()));
             return "coverLetters/editCL";
         }
         return "redirect:/jobs/coverLetters/{jobId}";
     }
 
 
-    @PostMapping("/edit/coverLetters/{jobId}/{coverLettersId}")
-    public String patch(@PathVariable Long coverLettersId, @PathVariable Long jobId, Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, CoverLetterDto dto) {
+    @PostMapping("/edit/coverLetters/{jobId}")
+    public String patch(@PathVariable Long jobId, CoverLetterDto coverLetterDto, Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
+
         if (coverLetterService.isCorrectUser(jobId, loginUser)) {
-            CoverLetter update = coverLetterService.update(jobId, dto, coverLettersId);
-            model.addAttribute("coverLetters", update);
+            CoverLetter update = coverLetterService.update(jobId, coverLetterDto, coverLetterDto.getId());
+            model.addAttribute("coverLetter", update);
+            return "redirect:/jobs/coverLetters/{jobId}";
         }
         return "redirect:/jobs/coverLetters/{jobId}";
     }
 
 
-    @GetMapping("/delete/coverLetters/{jobId}/{coverLettersId}")
-    public String delete(@PathVariable Long coverLettersId, @PathVariable Long jobId, Model model) {
+    @PostMapping("/delete/coverLetters/{jobId}")
+    public String delete(@ModelAttribute CoverLetterDto coverLetterDto, @PathVariable Long jobId, Model model) {
         Job job = jobService.showJob(jobId);
         model.addAttribute("job", job);
-        coverLetterService.remove(coverLettersId);
+        coverLetterService.remove(coverLetterDto.getId());
 
         return "redirect:/jobs/coverLetters/{jobId}";
 
