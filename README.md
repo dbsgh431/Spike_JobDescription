@@ -28,4 +28,5 @@
 
 
 ## ERD
-![마이잡디_ERD](https://github.com/dbsgh431/Spike_JobDiscription/assets/39187226/11cfe28e-7fef-4ad1-8666-65ddba5979b9)
+![마이잡디_ERD_mini](https://github.com/dbsgh431/Spike_JobDiscription/assets/39187226/f2a1d71b-90b5-4f65-b450-6a695e1f74d2)
+
