@@ -24,7 +24,8 @@
 | 저장소 &nbsp;&nbsp;&nbsp;&nbsp;| https://github.com/dbsgh431/Spike_JobDiscription |
 
 ## 프로젝트 구조
-![마이잡디_아키텍쳐](https://github.com/dbsgh431/Spike_JobDiscription/assets/39187226/2280e6ec-1bfc-44f6-8d38-209eea3d70e8)
+![마이잡디_아키텍쳐_down](https://github.com/dbsgh431/Spike_JobDiscription/assets/39187226/85281fa3-7c26-4fe3-9806-874bd737d4d5)
+
 
 ## ERD
 ![마이잡디_ERD](https://github.com/dbsgh431/Spike_JobDiscription/assets/39187226/11cfe28e-7fef-4ad1-8666-65ddba5979b9)
