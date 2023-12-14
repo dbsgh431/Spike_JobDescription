@@ -46,47 +46,53 @@ public class JobController {
     @PostMapping("/add")
     public String addJob(@ModelAttribute JobDto dto, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
         jobService.create(dto, loginUser);
-
         return "redirect:/jobs";
     }
 
     @GetMapping("/edit/{id}")
-    public String editJobForm(@PathVariable("id") Long id, Model model) {
-        Job job = jobService.showJob(id);
+    public String editJobForm(@PathVariable("id") Long id, Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
 
-        if (job != null) {
-            model.addAttribute("job", job);
-            return "jobs/editJob";
+        if (jobService.isCorrectUser(id, loginUser)) {
+            Job job = jobService.showJob(id);
+            if (job != null) {
+                model.addAttribute("job", job);
+                return "jobs/editJob";
+            }
         }
         return "redirect:/jobs";
     }
 
     @GetMapping("/update/{id}")
-    public String updateJobForm(@PathVariable("id") Long id, Model model) {
-        Job job = jobService.showJob(id);
-        if (job != null) {
-            model.addAttribute("job", job);
-            return "jobs/updateJob";
+    public String updateJobForm(@PathVariable("id") Long id, Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
+        if (jobService.isCorrectUser(id, loginUser)) {
+            Job job = jobService.showJob(id);
+            if (job != null) {
+                model.addAttribute("job", job);
+                return "jobs/updateJob";
+            }
         }
         return "redirect:/jobs";
     }
 
     @PostMapping("/update")
-    public String updateJob(JobDto dto, Model model, UserDto userDto) {
-        Job job = jobService.patch(dto, userDto);
+    public String updateJob(JobDto dto, Model model, UserDto userDto, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
+        if (jobService.isCorrectUser(dto.getId(), loginUser)) {
+            Job job = jobService.patch(dto, userDto);
 
-        if (job != null) {
-            model.addAttribute("job", job);
-            return "redirect:/jobs/edit/" + job.getId();
+            if (job != null) {
+                model.addAttribute("job", job);
+                return "redirect:/jobs/edit/" + job.getId();
+            }
         }
         return "redirect:/jobs";
     }
 
     @PostMapping("/delete")
-    public String deleteJob(Job job) {
-
-        if (jobService.delete(job.getId())) {
-            return "redirect:/jobs";
+    public String deleteJob(Job job, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
+        if (jobService.isCorrectUser(job.getId(), loginUser)) {
+            if (jobService.delete(job.getId())) {
+                return "redirect:/jobs";
+            }
         }
         return "jobs/editJob";
 

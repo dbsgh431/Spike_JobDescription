@@ -62,4 +62,13 @@ public class JobService {
         }
         return false;
     }
+
+    public boolean isCorrectUser(Long jodId, User loginUser) {
+        Job job = jobRepository.findById(jodId).orElse(null);
+        log.info("회원={}", loginUser);
+        if (job.getUser().equals(loginUser)) {
+            return true;
+        }
+        return false;
+    }
 }

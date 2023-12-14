@@ -16,7 +16,7 @@ public class CoverLetterDto {
     private String title;
     private String content;
 
-    //private Long job_id;
+    private Long job_id;
 
     public CoverLetter toEntity(Job job) {
         return new CoverLetter(null, title, content, job);

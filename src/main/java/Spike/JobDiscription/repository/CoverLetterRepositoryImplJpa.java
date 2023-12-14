@@ -19,9 +19,5 @@ public interface CoverLetterRepositoryImplJpa extends CrudRepository<CoverLetter
     List<CoverLetter> findByJobId(@Param("jobId") Long jobId);
 
     @Override
-    @Query(value = "DELETE FROM cover_letter WHERE job_Id = :jobId", nativeQuery = true)
-    void deleteByJobId(@Param("jobId") Long jobId);
-
-    @Override
     Optional<CoverLetter> findById(Long id);
 }

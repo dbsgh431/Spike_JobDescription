@@ -44,27 +44,11 @@
         var content = document.getElementById("content").value;
         var characterCount = content.length;
         document.getElementById("characterCount").innerText = "글자 수: " + characterCount;
-
-        // Ajax를 사용하여 서버로 실시간 업데이트
-        $.ajax({
-            type: "POST",
-            url: "/updateCharacterCount",
-            contentType: "application/json;charset=UTF-8",
-            data: JSON.stringify({ characterCount: characterCount }),
-            success: function(response) {
-                console.log("Server response: " + response);
-            },
-            error: function(error) {
-                console.error("Error: " + JSON.stringify(error));
-            }
-        });
     }
     // 페이지 로드 시 한 번 실행
     $(document).ready(function() {
         updateCharacterCount();
     });
-
-
 </script>
 
 

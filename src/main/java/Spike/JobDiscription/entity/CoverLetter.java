@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import static jakarta.persistence.FetchType.LAZY;
-
 @Entity
 @Getter
 @NoArgsConstructor
@@ -25,13 +23,9 @@ public class CoverLetter {
     @Column(length = 1500)
     private String content;
 
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_id")
     private Job job;
-
-//    @ManyToOne(fetch = LAZY)
-//    @JoinColumn(name = "user_id")
-//    private User user;
 
     public void patch(CoverLetter coverLetter) {
         if (coverLetter.getTitle() != null) {
