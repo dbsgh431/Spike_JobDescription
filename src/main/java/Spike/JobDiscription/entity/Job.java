@@ -6,7 +6,6 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
 @NoArgsConstructor
@@ -37,11 +36,9 @@ public class Job {
     @Column
     private LocalDate period;
 
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
-
 
 
     public void update(Job job) {
@@ -54,7 +51,7 @@ public class Job {
         if (job.url != null) {
             this.url = job.url;
         }
-        
+
         this.period = job.period;
 
         this.isApply = job.isApply;

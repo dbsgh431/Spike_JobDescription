@@ -56,10 +56,9 @@ public class CoverLetterController {
     }
 
     @PostMapping("/add/coverLetters/{jobId}")
-    public String add(@PathVariable Long jobId, CoverLetterDto dto, Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
+    public String add(@PathVariable Long jobId, CoverLetterDto dto, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
         if (coverLetterService.isCorrectUser(jobId, loginUser)) {
-            CoverLetter coverLetter = coverLetterService.create(dto, jobId);
-            model.addAttribute("coverLetters", new CoverLetter());
+            coverLetterService.create(dto, jobId);
         }
 
         return "redirect:/jobs/coverLetters/{jobId}";
@@ -69,7 +68,7 @@ public class CoverLetterController {
     public String editForm(@PathVariable Long coverLettersId, @PathVariable Long jobId, Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, CoverLetterDto dto) {
         if (coverLetterService.isCorrectUser(jobId, loginUser)) {
             CoverLetter coverLetter = coverLetterService.show(coverLettersId);
-            model.addAttribute("coverLetterDto", new CoverLetterDto(coverLetter.getId(), coverLetter.getTitle(), coverLetter.getContent()));
+            model.addAttribute("coverLetterDto", new CoverLetterDto(coverLetter.getId(), coverLetter.getTitle(), coverLetter.getContent(), jobId));
             return "coverLetters/editCL";
         }
         return "redirect:/jobs/coverLetters/{jobId}";
@@ -89,11 +88,10 @@ public class CoverLetterController {
 
 
     @PostMapping("/delete/coverLetters/{jobId}")
-    public String delete(@ModelAttribute CoverLetterDto coverLetterDto, @PathVariable Long jobId, Model model) {
-        Job job = jobService.showJob(jobId);
-        model.addAttribute("job", job);
-        coverLetterService.remove(coverLetterDto.getId());
-
+    public String delete(@ModelAttribute CoverLetterDto coverLetterDto, @PathVariable Long jobId, Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
+        if (coverLetterService.isCorrectUser(jobId, loginUser)) {
+            coverLetterService.remove(coverLetterDto.getId());
+        }
         return "redirect:/jobs/coverLetters/{jobId}";
 
     }

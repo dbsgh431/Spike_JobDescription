@@ -34,12 +34,9 @@ public class CoverLetterService {
         CoverLetter saved = coverLetterRepository.save(coverLetter);
         return saved;
     }
-    @Transactional
-    public boolean remove(Long coverLettersId) {
+    public CoverLetter show(Long coverLettersId) {
         CoverLetter coverLetter = coverLetterRepository.findById(coverLettersId).orElseThrow(() -> new IllegalArgumentException());
-        coverLetterRepository.delete(coverLetter);
-        return true;
-
+        return  coverLetter;
     }
     @Transactional
     public CoverLetter update(Long jobId, CoverLetterDto dto, Long coverLettersId) {
@@ -49,6 +46,14 @@ public class CoverLetterService {
         return coverLetterRepository.save(target);
     }
 
+    @Transactional
+    public boolean remove(Long coverLettersId) {
+        CoverLetter coverLetter = coverLetterRepository.findById(coverLettersId).orElseThrow(() -> new IllegalArgumentException());
+        coverLetterRepository.delete(coverLetter);
+        return true;
+
+    }
+
     public boolean isCorrectUser(Long jobId, User loginUser) {
         Job job = jobRepository.findById(jobId).orElse(null);
         log.info("회원={}", loginUser);
@@ -56,10 +61,5 @@ public class CoverLetterService {
             return true;
         }
         return false;
-    }
-
-    public CoverLetter show(Long coverLettersId) {
-        CoverLetter coverLetter = coverLetterRepository.findById(coverLettersId).orElseThrow(() -> new IllegalArgumentException());
-        return  coverLetter;
     }
 }
