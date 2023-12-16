@@ -1,6 +1,7 @@
 package Spike.JobDiscription.repository;
 
 import Spike.JobDiscription.entity.Job;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-public interface JobRepositoryImplJpa extends CrudRepository<Job, Long>, JobRepository {
+public interface JobRepositoryImplJpa extends JpaRepository<Job, Long>, JobRepository {
 
     @Override
     Job save(Job job);

@@ -1,6 +1,7 @@
 package Spike.JobDiscription.repository;
 
 import Spike.JobDiscription.entity.CoverLetter;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -17,6 +18,11 @@ public interface CoverLetterRepositoryImplJpa extends CrudRepository<CoverLetter
     @Override
     @Query(value = "SELECT * FROM cover_letter WHERE job_Id = :jobId", nativeQuery = true)
     List<CoverLetter> findByJobId(@Param("jobId") Long jobId);
+
+    @Override
+    @Modifying
+    @Query(value = "DELETE FROM cover_letter WHERE job_Id = :jobId", nativeQuery = true)
+    void DeleteByJobId(@Param("jobId") Long jobId);
 
     @Override
     Optional<CoverLetter> findById(Long id);

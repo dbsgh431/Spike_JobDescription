@@ -13,6 +13,7 @@ public interface CoverLetterRepository {
 
     Optional<CoverLetter> findById(Long id);
 
+    void DeleteByJobId(Long jobId);
 
     List<CoverLetter> findByJobId(Long jobId);
 

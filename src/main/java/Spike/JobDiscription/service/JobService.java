@@ -3,13 +3,19 @@ package Spike.JobDiscription.service;
 
 import Spike.JobDiscription.dto.JobDto;
 import Spike.JobDiscription.dto.UserDto;
+import Spike.JobDiscription.entity.CoverLetter;
 import Spike.JobDiscription.entity.Job;
 import Spike.JobDiscription.entity.User;
 import Spike.JobDiscription.repository.CoverLetterRepositoryImplJpa;
+import Spike.JobDiscription.repository.JobRepository;
 import Spike.JobDiscription.repository.JobRepositoryImplJpa;
 import Spike.JobDiscription.repository.UserRepositoryImplJpa;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,11 +62,31 @@ public class JobService {
     public boolean delete(Long id) {
         Job target = jobRepository.findById(id).orElse(null);
         if (target != null) {
-            coverLetterRepository.deleteById(target.getId());
+            coverLetterRepository.DeleteByJobId(target.getId());
+
             jobRepository.delete(target);
             return true;
         }
         return false;
+    }
+
+    public Page<JobDto> paging(Pageable pageable) {
+        int pageNumber = pageable.getPageNumber() - 1;
+        int pageSize = 20;
+
+        Page<Job> jobPages = jobRepository.findAll(PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC,"id")));
+
+        Page<JobDto> resultDtos = jobPages.
+                map(job ->
+                        new JobDto(job.getId(),
+                                job.getCompanyName(),
+                                job.getPosition(),
+                                job.getUrl(),
+                                job.getIsApply(),
+                                job.getPeriod(),
+                                job.getUser().getId()));
+
+        return resultDtos;
     }
 
     public boolean isCorrectUser(Long jodId, User loginUser) {
