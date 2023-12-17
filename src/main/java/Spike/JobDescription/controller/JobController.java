@@ -46,13 +46,13 @@ public class JobController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("user", loginUser);
-        return "/jobs/JDList";
+        return "jobs/JDList";
     }
 
     @GetMapping("/add")
     public String jobForm(Job job, Model model) {
         model.addAttribute("jobDto", new JobDto());
-        return "/jobs/addJob";
+        return "jobs/addJob";
     }
 
 
@@ -69,7 +69,7 @@ public class JobController {
             Job job = jobService.showJob(id);
             if (job != null) {
                 model.addAttribute("job", job);
-                return "/jobs/editJob";
+                return "jobs/editJob";
             }
         }
         return "redirect:/jobs";
@@ -81,7 +81,7 @@ public class JobController {
             Job job = jobService.showJob(id);
             if (job != null) {
                 model.addAttribute("job", job);
-                return "/jobs/updateJob";
+                return "jobs/updateJob";
             }
         }
         return "redirect:/jobs";
@@ -107,7 +107,7 @@ public class JobController {
                 return "redirect:/jobs";
             }
         }
-        return "/jobs/editJob";
+        return "jobs/editJob";
 
     }
 }
