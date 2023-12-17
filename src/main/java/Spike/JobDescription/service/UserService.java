@@ -2,7 +2,7 @@ package Spike.JobDescription.service;
 
 
 import Spike.JobDescription.dto.UserDto;
-import Spike.JobDescription.converter.entity.User;
+import Spike.JobDescription.entity.User;
 import Spike.JobDescription.repository.UserRepositoryImplJpa;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -2,7 +2,7 @@ package Spike.JobDescription.controller;
 
 
 import Spike.JobDescription.dto.UserDto;
-import Spike.JobDescription.converter.entity.User;
+import Spike.JobDescription.entity.User;
 import Spike.JobDescription.service.UserService;
 import Spike.JobDescription.web.SessionConst;
 import jakarta.servlet.http.HttpSession;
@@ -29,7 +29,7 @@ public class HomeController {
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("userDto", new UserDto());
-        return "login";
+        return "/login";
     }
 
     @PostMapping("/login")
@@ -37,7 +37,7 @@ public class HomeController {
         User user = userService.signIn(userDto);
         if (user == null) {
             model.addAttribute("error", "아이디 또는 비밀번호가 일치하지 않습니다.");
-            return "login";
+            return "/login";
 
         }
         session.setAttribute(SessionConst.LOGIN_USER, user);
@@ -58,13 +58,13 @@ public class HomeController {
             return "redirect:/";
         } else {
             model.addAttribute("exist", "이미 존재하는 회원 이메일입니다.");
-            return "signUp";
+            return "/signUp";
         }
     }
 
     @GetMapping("/signUp")
     public String signUpForm(Model model) {
         model.addAttribute("userDto", new UserDto());
-        return "signUp";
+        return "/signUp";
     }
 }

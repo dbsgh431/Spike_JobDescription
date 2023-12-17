@@ -1,7 +1,7 @@
 package Spike.JobDescription.repository;
 
 
-import Spike.JobDescription.converter.entity.CoverLetter;
+import Spike.JobDescription.entity.CoverLetter;
 
 
 import java.util.List;

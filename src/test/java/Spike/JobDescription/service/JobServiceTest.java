@@ -1,7 +1,7 @@
 package Spike.JobDescription.service;
 
-import Spike.JobDescription.converter.entity.Job;
-import Spike.JobDescription.converter.entity.User;
+import Spike.JobDescription.entity.Job;
+import Spike.JobDescription.entity.User;
 import Spike.JobDescription.repository.JobRepository;
 import Spike.JobDescription.repository.JobRepositoryImplMemory;
 import org.junit.jupiter.api.AfterEach;

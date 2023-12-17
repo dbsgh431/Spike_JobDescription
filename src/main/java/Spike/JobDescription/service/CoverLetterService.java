@@ -2,9 +2,9 @@ package Spike.JobDescription.service;
 
 
 import Spike.JobDescription.dto.CoverLetterDto;
-import Spike.JobDescription.converter.entity.CoverLetter;
-import Spike.JobDescription.converter.entity.Job;
-import Spike.JobDescription.converter.entity.User;
+import Spike.JobDescription.entity.CoverLetter;
+import Spike.JobDescription.entity.Job;
+import Spike.JobDescription.entity.User;
 import Spike.JobDescription.repository.CoverLetterRepositoryImplJpa;
 import Spike.JobDescription.repository.JobRepositoryImplJpa;
 import lombok.RequiredArgsConstructor;

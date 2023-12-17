@@ -2,7 +2,7 @@ package Spike.JobDescription.repository;
 
 
 
-import Spike.JobDescription.converter.entity.User;
+import Spike.JobDescription.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

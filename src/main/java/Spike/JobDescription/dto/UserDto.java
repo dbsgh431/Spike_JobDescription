@@ -1,6 +1,6 @@
 package Spike.JobDescription.dto;
 
-import Spike.JobDescription.converter.entity.User;
+import Spike.JobDescription.entity.User;
 import lombok.*;
 
 @NoArgsConstructor

@@ -1,6 +1,6 @@
 package Spike.JobDescription.repository;
 
-import Spike.JobDescription.converter.entity.CoverLetter;
+import Spike.JobDescription.entity.CoverLetter;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

@@ -1,6 +1,6 @@
 package Spike.JobDescription.repository;
 
-import Spike.JobDescription.converter.entity.Job;
+import Spike.JobDescription.entity.Job;
 
 import java.util.List;
 import java.util.Optional;

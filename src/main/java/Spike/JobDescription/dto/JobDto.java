@@ -1,8 +1,8 @@
 package Spike.JobDescription.dto;
 
 
-import Spike.JobDescription.converter.entity.Job;
-import Spike.JobDescription.converter.entity.User;
+import Spike.JobDescription.entity.Job;
+import Spike.JobDescription.entity.User;
 import lombok.*;
 
 import java.time.LocalDate;

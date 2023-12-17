@@ -3,8 +3,8 @@ package Spike.JobDescription.service;
 
 import Spike.JobDescription.dto.JobDto;
 import Spike.JobDescription.dto.UserDto;
-import Spike.JobDescription.converter.entity.Job;
-import Spike.JobDescription.converter.entity.User;
+import Spike.JobDescription.entity.Job;
+import Spike.JobDescription.entity.User;
 import Spike.JobDescription.repository.CoverLetterRepositoryImplJpa;
 import Spike.JobDescription.repository.JobRepositoryImplJpa;
 import Spike.JobDescription.repository.UserRepositoryImplJpa;

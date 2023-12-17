@@ -1,8 +1,8 @@
 package Spike.JobDescription.dto;
 
 
-import Spike.JobDescription.converter.entity.CoverLetter;
-import Spike.JobDescription.converter.entity.Job;
+import Spike.JobDescription.entity.CoverLetter;
+import Spike.JobDescription.entity.Job;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

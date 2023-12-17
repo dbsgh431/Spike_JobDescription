@@ -1,4 +1,4 @@
-package Spike.JobDescription.converter.entity;
+package Spike.JobDescription.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

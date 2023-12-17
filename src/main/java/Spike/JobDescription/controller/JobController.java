@@ -2,8 +2,8 @@ package Spike.JobDescription.controller;
 
 import Spike.JobDescription.dto.JobDto;
 import Spike.JobDescription.dto.UserDto;
-import Spike.JobDescription.converter.entity.Job;
-import Spike.JobDescription.converter.entity.User;
+import Spike.JobDescription.entity.Job;
+import Spike.JobDescription.entity.User;
 import Spike.JobDescription.service.JobService;
 import Spike.JobDescription.web.SessionConst;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class JobController {
         model.addAttribute("username", loginUser.getEmail());
     }
 
-    @GetMapping("")
+    @GetMapping()
     public String jobs(@PageableDefault(page = 1) Pageable pageable, Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
         Page<JobDto> jobsPages = jobService.paging(pageable);
 
@@ -46,20 +46,20 @@ public class JobController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("user", loginUser);
-        return "jobs/JDList";
+        return "/jobs/JDList";
     }
 
     @GetMapping("/add")
     public String jobForm(Job job, Model model) {
         model.addAttribute("jobDto", new JobDto());
-        return "jobs/addJob";
+        return "/jobs/addJob";
     }
 
 
     @PostMapping("/add")
     public String addJob(@ModelAttribute JobDto dto, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
         jobService.create(dto, loginUser);
-        return "redirect:/jobs/";
+        return "redirect:/jobs";
     }
 
     @GetMapping("/edit/{id}")
@@ -81,7 +81,7 @@ public class JobController {
             Job job = jobService.showJob(id);
             if (job != null) {
                 model.addAttribute("job", job);
-                return "jobs/updateJob";
+                return "/jobs/updateJob";
             }
         }
         return "redirect:/jobs";
@@ -104,10 +104,10 @@ public class JobController {
     public String deleteJob(Job job, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
         if (jobService.isCorrectUser(job.getId(), loginUser)) {
             if (jobService.delete(job.getId())) {
-                return "redirect:/jobs/paging";
+                return "redirect:/jobs";
             }
         }
-        return "jobs/editJob";
+        return "/jobs/editJob";
 
     }
 }
