@@ -21,9 +21,9 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="job : ${jobs}">
+    <tr th:each="job : ${jobsPages}">
         <th scope="row" th:text="${jobStat.count}">index</th>
-        <td><a th:href="@{|jobs/edit/${job.id}|}" th:text="${job.companyName}">회사명</a></td>
+        <td><a th:href="@{|/jobs/edit/${job.id}|}" th:text="${job.companyName}">회사명</a></td>
         <td th:text="${job.position}">직무</td>
         <td th:text="${job.period} ? ${job.period} : '수시 채용'">마감 기간</td>
         <td th:text="${job.isApply} ? '지원 완료' : '' ">지원 여부</td>
@@ -34,7 +34,31 @@
 
     <a class="btn btn-primary" href="/jobs/add" role="button">목록 추가</a>
 </div>
-<div th:insert="~{layouts/footer :: footer}"></div>
+<div class="col text-center">
+    <!-- 첫번째 페이지로 이동 -->
+    <a th:href="@{/jobs(page=1)}">첫 페이지 </a>
 
+    <!-- 이전 링크 활성화 비활성화 -->
+    <a th:href="${jobsPages.first} ? '#' : @{/jobs(page=${jobsPages.number})}"> 이전 </a>
+
+    <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
+
+    <!-- 현재페이지는 링크 없이 숫자만 -->
+        <span th:if="${page == jobsPages.number + 1}" th:text="${page}"></span>
+        <!-- 현재페이지 링크 X, 다른 페이지번호에는 링크를 보여준다 -->
+        <span th:unless="${page == jobsPages.number + 1}">
+    <a th:href="@{/jobs(page=${page})}" th:text="${page}"></a>
+        </span>
+    </span>
+
+    <!-- 다음 링크 활성화 비활성화 -->
+    <a th:href="${jobsPages.last} ? '#' : @{/jobs(page=${jobsPages.number + 2})}"> 다음 </a>
+
+    <!-- 마지막 페이지로 이동 -->
+    <a th:href="@{/jobs(page=${jobsPages.totalPages})}"> 마지막 페이지</a>
+
+
+    <div th:insert="~{layouts/footer :: footer}"></div>
+</div>
 </body>
 </html>
