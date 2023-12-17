@@ -21,7 +21,7 @@
 | 주요 기능 &nbsp;&nbsp;| 회원 별 취업 공고 스크랩 게시판 CRUD 기능</br>회원 등록 및 로그인 - 회원 가입 및 로그인 </br> 회원 등록 및 로그인 시 중복  검사 </br>스크랩한 공고에 대한 자기소개서 항목 별 CRUD 및 글자 수 체크 기능 |
 | 사용 언어 &nbsp;&nbsp;| Java 17 |
 | 개발 환경 &nbsp;&nbsp;| SpringBoot 3.1.5, gradle 8.3 , JPA(Spring Data JPA), Thymeleaf, MySQL 8.0.31, GCP |
-| 저장소 &nbsp;&nbsp;&nbsp;&nbsp;| https://github.com/dbsgh431/Spike_JobDiscription |
+| 저장소 &nbsp;&nbsp;&nbsp;&nbsp;| https://github.com/dbsgh431/Spike_JobDescription |
 
 ## 프로젝트 구조
 ![마이잡디_아키텍쳐_down](https://github.com/dbsgh431/Spike_JobDiscription/assets/39187226/85281fa3-7c26-4fe3-9806-874bd737d4d5)
