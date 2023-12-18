@@ -43,7 +43,7 @@ public class CoverLetterController {
         if (coverLetterService.isCorrectUser(jobId, loginUser)) {
             List<CoverLetter> coverLetters = coverLetterService.showAll(jobId);
             model.addAttribute("coverLetters", coverLetters);
-            return "/coverLetters/ClList";
+            return "coverLetters/ClList";
         }
         log.info("유효하지 않은 요청={}", loginUser.getEmail());
         return "redirect:/jobs";
@@ -52,7 +52,7 @@ public class CoverLetterController {
     @GetMapping("/add/coverLetters/{jobId}")
     public String addForm(Model model) {
         model.addAttribute("coverLetters", new CoverLetter());
-        return "/coverLetters/addCL";
+        return "coverLetters/addCL";
     }
 
     @PostMapping("/add/coverLetters/{jobId}")
@@ -69,7 +69,7 @@ public class CoverLetterController {
         if (coverLetterService.isCorrectUser(jobId, loginUser)) {
             CoverLetter coverLetter = coverLetterService.show(coverLettersId);
             model.addAttribute("coverLetterDto", new CoverLetterDto(coverLetter.getId(), coverLetter.getTitle(), coverLetter.getContent(), jobId));
-            return "/coverLetters/editCL";
+            return "coverLetters/editCL";
         }
         return "redirect:/jobs/coverLetters/{jobId}";
     }

@@ -29,9 +29,9 @@ public class JobController {
         model.addAttribute("username", loginUser.getEmail());
     }
 
-    @GetMapping()
+    @GetMapping("")
     public String jobs(@PageableDefault(page = 1) Pageable pageable, Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
-        Page<JobDto> jobsPages = jobService.paging(pageable);
+        Page<JobDto> jobsPages = jobService.paging(pageable, loginUser);
 
         /**
          * blockLimit : page 개수 설정

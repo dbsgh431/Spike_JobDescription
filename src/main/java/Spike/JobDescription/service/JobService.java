@@ -70,12 +70,12 @@ public class JobService {
         return false;
     }
 
-    public Page<JobDto> paging(Pageable pageable) {
+    public Page<JobDto> paging(Pageable pageable, User user) {
         int pageNumber = pageable.getPageNumber() - 1; // 0부터 시작하도록
         int pageSize = 20;
 
         // 정렬 기준은 ID기준으로 내림차순으로 pageSize만큼 가져옴
-        Page<Job> jobPages = jobRepository.findAll(PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "id")));
+        Page<Job> jobPages = jobRepository.findByUser(user,PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "id")));
 
         Page<JobDto> resultDtos = jobPages.
                 map(job -> new JobDto(job.getId(),

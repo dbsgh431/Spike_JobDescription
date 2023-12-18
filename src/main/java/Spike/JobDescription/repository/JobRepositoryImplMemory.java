@@ -1,8 +1,11 @@
 package Spike.JobDescription.repository;
 
 import Spike.JobDescription.entity.Job;
+import Spike.JobDescription.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.*;
 
@@ -38,6 +41,11 @@ public class JobRepositoryImplMemory implements JobRepository {
     @Override
     public Optional<Job> findById(Long id) {
         return Optional.ofNullable(store.get(id));
+    }
+
+    @Override
+    public Page<Job> findByUser(User user, Pageable pageable) {
+        return null;
     }
 
     @Override
