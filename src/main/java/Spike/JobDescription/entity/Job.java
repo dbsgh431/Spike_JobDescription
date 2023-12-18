@@ -28,7 +28,7 @@ public class Job {
     private String position;
 
     @NotBlank(message = "페이지 주소는 필수 입력 값입니다.")
-    @Column
+    @Column(length = 1000)
     private String url;
     @Column
     private Boolean isApply;
