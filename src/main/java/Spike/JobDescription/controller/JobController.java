@@ -66,9 +66,9 @@ public class JobController {
     public String editJobForm(@PathVariable("id") Long id, Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
 
         if (jobService.isCorrectUser(id, loginUser)) {
-            Job job = jobService.showJob(id);
-            if (job != null) {
-                model.addAttribute("job", job);
+            JobDto JobDto = jobService.showJob(id);
+            if (JobDto != null) {
+                model.addAttribute("jobDto", JobDto);
                 return "jobs/editJob";
             }
         }
@@ -78,9 +78,9 @@ public class JobController {
     @GetMapping("/update/{id}")
     public String updateJobForm(@PathVariable("id") Long id, Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
         if (jobService.isCorrectUser(id, loginUser)) {
-            Job job = jobService.showJob(id);
-            if (job != null) {
-                model.addAttribute("job", job);
+            JobDto jobDto = jobService.showJob(id);
+            if (jobDto != null) {
+                model.addAttribute("jobDto", jobDto);
                 return "jobs/updateJob";
             }
         }

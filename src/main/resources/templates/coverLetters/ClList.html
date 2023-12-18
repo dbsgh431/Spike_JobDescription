@@ -20,12 +20,12 @@
     <tbody>
     <tr th:each="coverLetter : ${coverLetters}">
         <th scope="row" th:text="${coverLetterStat.count}">index</th>
-        <td><a th:href="@{|/jobs/edit/coverLetters/${job.id}/${coverLetter.id}|}" th:text="${coverLetter.title}">내용</a></td>
+        <td><a th:href="@{|/jobs/edit/coverLetters/${jobDto.id}/${coverLetter.id}|}" th:text="${coverLetter.title}">내용</a></td>
     </tr>
     </tbody>
 </table>
 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-    <a class="btn btn-primary" th:href="@{|/jobs/add/coverLetters/${job.id}|}" role="button">자소서 작성</a>
+    <a class="btn btn-primary" th:href="@{|/jobs/add/coverLetters/${jobDto.id}|}" role="button">자소서 작성</a>
     <a class="btn btn-primary" href="/jobs" role="button">목록으로</a>
 </div>
 

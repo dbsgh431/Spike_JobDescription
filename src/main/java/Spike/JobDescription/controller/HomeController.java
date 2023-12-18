@@ -6,10 +6,13 @@ import Spike.JobDescription.entity.User;
 import Spike.JobDescription.service.UserService;
 import Spike.JobDescription.web.SessionConst;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -53,20 +56,28 @@ public class HomeController {
         return "redirect:/";
     }
 
-    @PostMapping("/signUp")
-    public String signUp(UserDto userDto, Model model) {
-        User user = userService.signUp(userDto);
-        if (user != null) {
-            return "redirect:/";
-        } else {
-            model.addAttribute("exist", "이미 존재하는 회원 이메일입니다.");
-            return "signUp";
-        }
-    }
-
     @GetMapping("/signUp")
     public String signUpForm(Model model) {
         model.addAttribute("userDto", new UserDto());
         return "signUp";
+    }
+
+    @PostMapping("/signUp")
+    public String signUp(@Validated UserDto userDto, BindingResult bindingResult, Model model) {
+
+
+        if (bindingResult.hasErrors()) {
+            log.info("dto={}", userDto.getPassword());
+            model.addAttribute("userDto", userDto);
+            return "signUp";
+        }
+
+        User user = userService.signUp(userDto);
+        if (user != null) {
+            return "redirect:/jobs";
+        } else {
+            model.addAttribute("exist", "이미 존재하는 회원 이메일입니다.");
+            return "signUp";
+        }
     }
 }

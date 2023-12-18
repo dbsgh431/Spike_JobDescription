@@ -26,7 +26,6 @@ public class JobService {
 
     private final JobRepositoryImplJpa jobRepository;
     private final UserRepositoryImplJpa userRepository;
-
     private final CoverLetterRepositoryImplJpa coverLetterRepository;
 
     public List<Job> showAll(User loginUser) {
@@ -36,14 +35,34 @@ public class JobService {
     }
 
     @Transactional
-    public Job create(JobDto dto, User loginUser) {
+    public JobDto create(JobDto dto, User loginUser) {
         User user = userRepository.findById(loginUser.getId()).orElse(null);
         Job job = dto.toEntity(user);
-        return jobRepository.save(job);
+        Job saved = jobRepository.save(job);
+        JobDto jobDto = JobDto.builder()
+                .id(saved.getId())
+                .companyName(saved.getCompanyName())
+                .position(saved.getPosition())
+                .url(saved.getUrl())
+                .isApply(saved.getIsApply())
+                .period(saved.getPeriod())
+                .userId(saved.getUser().getId()).build();
+
+        return jobDto;
     }
 
-    public Job showJob(Long id) {
-        return jobRepository.findById(id).orElse(null);
+    public JobDto showJob(Long id) {
+        Job found = jobRepository.findById(id).orElse(null);
+
+        return JobDto.builder()
+                .id(found.getId())
+                .companyName(found.getCompanyName())
+                .position(found.getPosition())
+                .url(found.getUrl())
+                .isApply(found.getIsApply())
+                .period(found.getPeriod())
+                .userId(found.getUser().getId()).build();
+
     }
 
     @Transactional
@@ -75,7 +94,7 @@ public class JobService {
         int pageSize = 20;
 
         // 정렬 기준은 ID기준으로 내림차순으로 pageSize만큼 가져옴
-        Page<Job> jobPages = jobRepository.findByUser(user,PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "id")));
+        Page<Job> jobPages = jobRepository.findByUser(user, PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "id")));
 
         Page<JobDto> resultDtos = jobPages.
                 map(job -> new JobDto(job.getId(),

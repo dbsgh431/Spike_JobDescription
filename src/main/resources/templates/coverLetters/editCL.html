@@ -32,11 +32,11 @@
     </div>
 </form>
 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-    <form th:action="@{|/jobs/delete/coverLetters/${job.id}|}" th:object="${coverLetterDto}" method="post">
+    <form th:action="@{|/jobs/delete/coverLetters/${jobDto.id}|}" th:object="${coverLetterDto}" method="post">
         <input name="id" type="hidden" th:value="*{id}">
         <button type="submit" class="btn btn-primary">삭제하기</button>
     </form>
-    <a class="btn btn-primary" th:href="@{|/jobs/coverLetters/${job.id}|}" role="button">목록으로</a>
+    <a class="btn btn-primary" th:href="@{|/jobs/coverLetters/${jobDto.id}|}" role="button">목록으로</a>
 </div>
 
 <script>

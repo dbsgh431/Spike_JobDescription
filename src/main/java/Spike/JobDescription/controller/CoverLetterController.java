@@ -1,6 +1,7 @@
 package Spike.JobDescription.controller;
 
 import Spike.JobDescription.dto.CoverLetterDto;
+import Spike.JobDescription.dto.JobDto;
 import Spike.JobDescription.entity.CoverLetter;
 import Spike.JobDescription.entity.Job;
 import Spike.JobDescription.entity.User;
@@ -33,8 +34,8 @@ public class CoverLetterController {
     // 자기소개서 등록 시 해당 공고 정보 공통 처리 모델
     @ModelAttribute
     public void jobToView(@PathVariable Long jobId, Model model) {
-        Job job = jobService.showJob(jobId);
-        model.addAttribute("job", job);
+        JobDto jobDto = jobService.showJob(jobId);
+        model.addAttribute("jobDto", jobDto);
     }
 
 
