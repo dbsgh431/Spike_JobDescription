@@ -25,7 +25,7 @@
 | 배포 주소 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| http://35.216.69.73:8080 |
 
 ## 프로젝트 구조
-![마이잡디_아키텍쳐_down](https://github.com/dbsgh431/Spike_JobDiscription/assets/39187226/85281fa3-7c26-4fe3-9806-874bd737d4d5)
+![구조](https://github.com/dbsgh431/Spike_JobDescription/assets/39187226/02d34636-dc73-4e68-886f-7ec096c5f760)
 
 
 ## ERD
