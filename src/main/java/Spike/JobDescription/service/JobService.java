@@ -66,13 +66,21 @@ public class JobService {
     }
 
     @Transactional
-    public Job patch(JobDto dto, UserDto userDto) {
+    public JobDto patch(JobDto dto, UserDto userDto) {
         User user = userRepository.findByEmail(userDto.getEmail());
         Job job = dto.toEntity(user);
         Job target = jobRepository.findById(job.getId()).orElse(null);
         if (target != null) {
             target.update(job);
-            return jobRepository.save(target);
+            Job saved = jobRepository.save(target);
+            return JobDto.builder()
+                    .id(saved.getId())
+                    .companyName(saved.getCompanyName())
+                    .position(saved.getPosition())
+                    .url(saved.getUrl())
+                    .isApply(saved.getIsApply())
+                    .period(saved.getPeriod())
+                    .userId(saved.getUser().getId()).build();
         }
         return null;
     }

@@ -14,6 +14,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
@@ -90,20 +91,19 @@ public class JobController {
     @PostMapping("/update")
     public String updateJob(JobDto dto, Model model, UserDto userDto, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
         if (jobService.isCorrectUser(dto.getId(), loginUser)) {
-            Job job = jobService.patch(dto, userDto);
-
-            if (job != null) {
-                model.addAttribute("job", job);
-                return "redirect:/jobs/edit/" + job.getId();
+            JobDto jobDto = jobService.patch(dto, userDto);
+            if (jobDto != null) {
+                model.addAttribute("jobDto", jobDto);
+                return "redirect:/jobs/edit/" + jobDto.getId();
             }
         }
         return "redirect:/jobs";
     }
 
     @PostMapping("/delete")
-    public String deleteJob(Job job, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
-        if (jobService.isCorrectUser(job.getId(), loginUser)) {
-            if (jobService.delete(job.getId())) {
+    public String deleteJob(JobDto dto, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
+        if (jobService.isCorrectUser(dto.getId(), loginUser)) {
+            if (jobService.delete(dto.getId())) {
                 return "redirect:/jobs";
             }
         }
