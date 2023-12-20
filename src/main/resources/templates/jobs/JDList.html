@@ -34,28 +34,26 @@
 
     <a class="btn btn-primary" href="/jobs/add" role="button">목록 추가</a>
 </div>
-<div class="col text-center">
-    <!-- 첫번째 페이지로 이동 -->
-    <a th:href="@{/jobs(page=1)}">첫 페이지 </a>
 
-    <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+            <a class="page-link" th:href="@{/jobs(page=1)}">처음</a>
+        </li>
+        <li class="page-item" th:each="page: ${#numbers.sequence(startPage, endPage)}">
+            <!-- 현재페이지는 링크 없이 숫자만 -->
+            <span class="page-link" th:if="${page == jobsPages.number + 1}" th:text="${page}"></span>
+            <!-- 현재페이지 링크 X, 다른 페이지번호에는 링크를 보여준다 -->
+            <span th:unless="${page == jobsPages.number + 1 or page == 0}">
 
-    <!-- 현재페이지는 링크 없이 숫자만 -->
-        <span th:if="${page == jobsPages.number + 1}" th:text="${page}"></span>
-        <!-- 현재페이지 링크 X, 다른 페이지번호에는 링크를 보여준다 -->
-        <span th:unless="${page == jobsPages.number + 1 or page == 0}">
-
-             <a th:href="@{/jobs(page=${page})}" th:text="${page}"></a>
+            <a class="page-link" th:href="@{/jobs(page=${page})}" th:text="${page}"></a>
         </span>
-    </span>
-
-
-    <!-- 마지막 페이지로 이동 -->
-    <span th:unless="${jobsPages.totalPages == 0}">
-        <a th:href="@{/jobs(page=${jobsPages.totalPages})}"> 마지막 페이지</a>
-    </span>
-
-    <div th:insert="~{layouts/footer :: footer}"></div>
-</div>
+        </li>
+        <li th:unless="${jobsPages.totalPages == 0}">
+            <a class="page-link" th:href="@{/jobs(page=${jobsPages.totalPages})}"> 마지막 페이지</a>
+        </li>
+    </ul>
+</nav>
+<div th:insert="~{layouts/footer :: footer}"></div>
 </body>
 </html>

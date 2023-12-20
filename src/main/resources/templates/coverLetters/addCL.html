@@ -13,8 +13,12 @@
 
 <form th:action="@{|/jobs/add/coverLetters/${jobDto.id}|}" method="post" th:object="${coverLetters}">
   <div class="mb-3">
+    <label class="form-label">회사명</label>
+    <input type="text" class="form-control" th:field="${jobDto.companyName}" disabled>
+  </div>
+  <div class="mb-3">
     <label class="form-label">항목</label>
-    <input type="text" class="form-control" th:field="*{title}" required>
+    <input type="text" class="form-control" placeholder="예시) 지원동기" th:field="*{title}" required>
   </div>
   <div class="mb-3">
     <label class="form-label">내용</label>
