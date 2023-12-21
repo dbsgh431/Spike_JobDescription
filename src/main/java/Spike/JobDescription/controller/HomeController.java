@@ -38,13 +38,13 @@ public class HomeController {
 
     @PostMapping("/login")
     public String login(UserDto userDto, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-        User user = userService.signIn(userDto);
-        if (user == null) {
+        UserDto signedUserDto = userService.signIn(userDto);
+        if (signedUserDto == null) {
             model.addAttribute("error", "아이디 또는 비밀번호가 일치하지 않습니다.");
             return "login";
 
         }
-        session.setAttribute(SessionConst.LOGIN_USER, user);
+        session.setAttribute(SessionConst.LOGIN_USER, signedUserDto);
         model.addAttribute("userDto", userDto);
         redirectAttributes.addAttribute("page", 1);
         return "redirect:/jobs";
@@ -72,8 +72,8 @@ public class HomeController {
             return "signUp";
         }
 
-        User user = userService.signUp(userDto);
-        if (user != null) {
+        UserDto signedUserDto = userService.signUp(userDto);
+        if (signedUserDto != null) {
             return "redirect:/jobs";
         } else {
             model.addAttribute("exist", "이미 존재하는 회원 이메일입니다.");

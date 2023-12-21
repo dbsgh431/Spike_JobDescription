@@ -49,8 +49,8 @@
             <a class="page-link" th:href="@{/jobs(page=${page})}" th:text="${page}"></a>
         </span>
         </li>
-        <li th:unless="${jobsPages.totalPages == 0}">
-            <a class="page-link" th:href="@{/jobs(page=${jobsPages.totalPages})}"> 마지막 페이지</a>
+        <li class="page-item" th:unless="${jobsPages.totalPages == 0}">
+            <a class="page-link" th:href="@{/jobs(page=${jobsPages.totalPages})}">마지막</a>
         </li>
     </ul>
 </nav>

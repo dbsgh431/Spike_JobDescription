@@ -2,6 +2,7 @@ package Spike.JobDescription.service;
 
 
 import Spike.JobDescription.dto.CoverLetterDto;
+import Spike.JobDescription.dto.UserDto;
 import Spike.JobDescription.entity.CoverLetter;
 import Spike.JobDescription.entity.Job;
 import Spike.JobDescription.entity.User;
@@ -54,10 +55,10 @@ public class CoverLetterService {
 
     }
 
-    public boolean isCorrectUser(Long jobId, User loginUser) {
+    public boolean isCorrectUser(Long jobId, UserDto loginUser) {
         Job job = jobRepository.findById(jobId).orElse(null);
-        log.info("회원={}", loginUser);
-        if (job.getUser().equals(loginUser)) {
+
+        if (job.getUser().equals(loginUser.toEntity())) {
             return true;
         }
         return false;

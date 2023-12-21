@@ -26,13 +26,14 @@ public class JobController {
 
     // 상단 네비게이션 바에 로그인한 유저 데이터 처리를 위한 모델
     @ModelAttribute
-    public void usernameToNavbar(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model) {
-        model.addAttribute("username", loginUser.getEmail());
+    public void usernameToNavbar(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) UserDto loginUser, Model model) {
+        model.addAttribute("username", loginUser.toEntity().getEmail());
     }
 
     @GetMapping("")
-    public String jobs(@PageableDefault(page = 1) Pageable pageable, Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
-        Page<JobDto> jobsPages = jobService.paging(pageable, loginUser);
+    public String jobs(@PageableDefault(page = 1) Pageable pageable, Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) UserDto loginUser) {
+        User user = loginUser.toEntity();
+        Page<JobDto> jobsPages = jobService.paging(pageable, user);
 
         /**
          * blockLimit : page 개수 설정
@@ -46,7 +47,7 @@ public class JobController {
         model.addAttribute("jobsPages", jobsPages);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
-        model.addAttribute("user", loginUser);
+        model.addAttribute("user", user);
         return "jobs/JDList";
     }
 
@@ -58,15 +59,15 @@ public class JobController {
 
 
     @PostMapping("/add")
-    public String addJob(@ModelAttribute JobDto dto, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
-        jobService.create(dto, loginUser);
+    public String addJob(@ModelAttribute JobDto dto, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) UserDto loginUser) {
+        jobService.create(dto, loginUser.toEntity());
         return "redirect:/jobs";
     }
 
     @GetMapping("/edit/{id}")
-    public String editJobForm(@PathVariable("id") Long id, Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
+    public String editJobForm(@PathVariable("id") Long id, Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) UserDto loginUser) {
 
-        if (jobService.isCorrectUser(id, loginUser)) {
+        if (jobService.isCorrectUser(id, loginUser.toEntity())) {
             JobDto JobDto = jobService.showJob(id);
             if (JobDto != null) {
                 model.addAttribute("jobDto", JobDto);
@@ -77,8 +78,8 @@ public class JobController {
     }
 
     @GetMapping("/update/{id}")
-    public String updateJobForm(@PathVariable("id") Long id, Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
-        if (jobService.isCorrectUser(id, loginUser)) {
+    public String updateJobForm(@PathVariable("id") Long id, Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) UserDto loginUser) {
+        if (jobService.isCorrectUser(id, loginUser.toEntity())) {
             JobDto jobDto = jobService.showJob(id);
             if (jobDto != null) {
                 model.addAttribute("jobDto", jobDto);
@@ -89,8 +90,8 @@ public class JobController {
     }
 
     @PostMapping("/update")
-    public String updateJob(JobDto dto, Model model, UserDto userDto, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
-        if (jobService.isCorrectUser(dto.getId(), loginUser)) {
+    public String updateJob(JobDto dto, Model model, UserDto userDto, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) UserDto loginUser) {
+        if (jobService.isCorrectUser(dto.getId(), loginUser.toEntity())) {
             JobDto jobDto = jobService.patch(dto, userDto);
             if (jobDto != null) {
                 model.addAttribute("jobDto", jobDto);
@@ -101,8 +102,8 @@ public class JobController {
     }
 
     @PostMapping("/delete")
-    public String deleteJob(JobDto dto, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
-        if (jobService.isCorrectUser(dto.getId(), loginUser)) {
+    public String deleteJob(JobDto dto, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) UserDto loginUser) {
+        if (jobService.isCorrectUser(dto.getId(), loginUser.toEntity())) {
             if (jobService.delete(dto.getId())) {
                 return "redirect:/jobs";
             }

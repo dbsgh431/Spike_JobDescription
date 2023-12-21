@@ -2,6 +2,7 @@ package Spike.JobDescription.controller;
 
 import Spike.JobDescription.dto.CoverLetterDto;
 import Spike.JobDescription.dto.JobDto;
+import Spike.JobDescription.dto.UserDto;
 import Spike.JobDescription.entity.CoverLetter;
 import Spike.JobDescription.entity.Job;
 import Spike.JobDescription.entity.User;
@@ -27,8 +28,8 @@ public class CoverLetterController {
 
     // 상단 네비게이션 바에 로그인한 유저 데이터 처리를 위한 모델
     @ModelAttribute
-    public void usernameToNavbar(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model) {
-        model.addAttribute("username", loginUser.getEmail());
+    public void usernameToNavbar(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) UserDto loginUserDto, Model model) {
+        model.addAttribute("username", loginUserDto.toEntity().getEmail());
     }
 
     // 자기소개서 등록 시 해당 공고 정보 공통 처리 모델
@@ -40,13 +41,13 @@ public class CoverLetterController {
 
 
     @GetMapping("/coverLetters/{jobId}")
-    public String reviews(@PathVariable Long jobId, Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
-        if (coverLetterService.isCorrectUser(jobId, loginUser)) {
+    public String reviews(@PathVariable Long jobId, Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) UserDto loginUserDto) {
+        if (coverLetterService.isCorrectUser(jobId, loginUserDto)) {
             List<CoverLetter> coverLetters = coverLetterService.showAll(jobId);
             model.addAttribute("coverLetters", coverLetters);
             return "coverLetters/ClList";
         }
-        log.info("유효하지 않은 요청={}", loginUser.getEmail());
+
         return "redirect:/jobs";
     }
 
@@ -57,8 +58,8 @@ public class CoverLetterController {
     }
 
     @PostMapping("/add/coverLetters/{jobId}")
-    public String add(@PathVariable Long jobId, CoverLetterDto dto, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
-        if (coverLetterService.isCorrectUser(jobId, loginUser)) {
+    public String add(@PathVariable Long jobId, CoverLetterDto dto, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) UserDto loginUserDto) {
+        if (coverLetterService.isCorrectUser(jobId, loginUserDto)) {
             coverLetterService.create(dto, jobId);
         }
 
@@ -66,8 +67,8 @@ public class CoverLetterController {
     }
 
     @GetMapping("/edit/coverLetters/{jobId}/{coverLettersId}")
-    public String editForm(@PathVariable Long coverLettersId, @PathVariable Long jobId, Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, CoverLetterDto dto) {
-        if (coverLetterService.isCorrectUser(jobId, loginUser)) {
+    public String editForm(@PathVariable Long coverLettersId, @PathVariable Long jobId, Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) UserDto loginUserDto, CoverLetterDto dto) {
+        if (coverLetterService.isCorrectUser(jobId, loginUserDto)) {
             CoverLetter coverLetter = coverLetterService.show(coverLettersId);
             model.addAttribute("coverLetterDto", new CoverLetterDto(coverLetter.getId(), coverLetter.getTitle(), coverLetter.getContent(), jobId));
             return "coverLetters/editCL";
@@ -77,9 +78,9 @@ public class CoverLetterController {
 
 
     @PostMapping("/edit/coverLetters/{jobId}")
-    public String patch(@PathVariable Long jobId, CoverLetterDto coverLetterDto, Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
+    public String patch(@PathVariable Long jobId, CoverLetterDto coverLetterDto, Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) UserDto loginUserDto) {
 
-        if (coverLetterService.isCorrectUser(jobId, loginUser)) {
+        if (coverLetterService.isCorrectUser(jobId, loginUserDto)) {
             CoverLetter update = coverLetterService.update(jobId, coverLetterDto, coverLetterDto.getId());
             model.addAttribute("coverLetter", update);
             return "redirect:/jobs/coverLetters/{jobId}";
@@ -89,8 +90,8 @@ public class CoverLetterController {
 
 
     @PostMapping("/delete/coverLetters/{jobId}")
-    public String delete(@ModelAttribute CoverLetterDto coverLetterDto, @PathVariable Long jobId, Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
-        if (coverLetterService.isCorrectUser(jobId, loginUser)) {
+    public String delete(@ModelAttribute CoverLetterDto coverLetterDto, @PathVariable Long jobId, Model model, @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) UserDto loginUserDto) {
+        if (coverLetterService.isCorrectUser(jobId, loginUserDto)) {
             coverLetterService.remove(coverLetterDto.getId());
         }
         return "redirect:/jobs/coverLetters/{jobId}";

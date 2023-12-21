@@ -16,22 +16,31 @@ public class UserService {
 
     private final UserRepositoryImplJpa userRepository;
     @Transactional
-    public User signUp(UserDto userDto) {
+    public UserDto signUp(UserDto userDto) {
         User toEntity = userDto.toEntity();
         User user = userRepository.findByEmail(toEntity.getEmail());
         if (user != null) {
             return null;
         }
-        return userRepository.save(userDto.toEntity());
+        User saved = userRepository.save(userDto.toEntity());
+        return UserDto.builder()
+                .id(saved.getId())
+                .email(saved.getEmail())
+                .password(saved.getPassword())
+                .build();
     }
 
-    public User signIn(UserDto userDto) {
+    public UserDto signIn(UserDto userDto) {
         log.info(userDto.toString());
         User toEntity = userDto.toEntity();
-        User user = userRepository.findByEmail(toEntity.getEmail());
-        if (user == null || !userDto.toEntity().checkPassword(user.getPassword())) {
+        User found = userRepository.findByEmail(toEntity.getEmail());
+        if (found == null || !userDto.toEntity().checkPassword(found.getPassword())) {
             return null;
         }
-        return user;
+        return UserDto.builder()
+                .id(found.getId())
+                .email(found.getEmail())
+                .password(found.getPassword())
+                .build();
     }
 }
