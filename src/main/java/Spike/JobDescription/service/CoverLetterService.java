@@ -5,7 +5,6 @@ import Spike.JobDescription.dto.CoverLetterDto;
 import Spike.JobDescription.dto.UserDto;
 import Spike.JobDescription.entity.CoverLetter;
 import Spike.JobDescription.entity.Job;
-import Spike.JobDescription.entity.User;
 import Spike.JobDescription.repository.CoverLetterRepositoryImplJpa;
 import Spike.JobDescription.repository.JobRepositoryImplJpa;
 import lombok.RequiredArgsConstructor;
