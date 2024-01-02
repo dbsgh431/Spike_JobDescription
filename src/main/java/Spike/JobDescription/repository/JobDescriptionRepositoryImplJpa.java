@@ -12,6 +12,6 @@ import java.util.List;
 public interface JobDescriptionRepositoryImplJpa extends JpaRepository<JobDescription, Long> {
 
     // 특정 공고의 모든 자격요건 및 우대사항 조회
-    @Query(value = "SELECT * FROM job_d escription WHERE job_id = :jobId", nativeQuery = true)
+    @Query(value = "SELECT * FROM job_description WHERE job_id = :jobId", nativeQuery = true)
     List<JobDescription> findByJobId(@Param("jobId") Long jobId);
 }

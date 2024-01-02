@@ -4,11 +4,13 @@ import Spike.JobDescription.entity.Job;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Entity
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Slf4j
 public class JobDescription {
 
@@ -36,5 +38,22 @@ public class JobDescription {
         }
 
         return new JobDescription(dto.getId(), job, dto.getTitle(), dto.getBody());
+    }
+
+
+    public void patch(JobDescriptionDto dto) {
+        // 예외 처리
+        if (this.id != dto.getId()) {
+            throw new IllegalArgumentException("잘못된 요청 id입니다.");
+        }
+        // 수정 처리
+        if (dto.getTitle() != null) {
+            this.title = dto.getTitle();
+        }
+
+        if (dto.getBody() != null) {
+            this.body = dto.getBody();
+        }
+
     }
 }

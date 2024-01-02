@@ -23,6 +23,7 @@ public class jobDescriptionApiController {
         List<JobDescriptionDto> JDDtos = jobDescriptionService.showAll(jobId);
         return ResponseEntity.status(HttpStatus.OK).body(JDDtos);
     }
+
     // 생성
     @PostMapping("/jobs/api/{jobId}/jobDescriptions")
     public ResponseEntity<JobDescriptionDto> create(@PathVariable Long jobId, @RequestBody JobDescriptionDto dto) {
@@ -31,6 +32,13 @@ public class jobDescriptionApiController {
     }
 
     // 수정
+    @PatchMapping("/jobs/api/{jdId}/jobDescriptions")
+    public ResponseEntity<JobDescriptionDto> update(@PathVariable Long jdId, @RequestBody JobDescriptionDto dto) {
+        JobDescriptionDto descriptionDto = jobDescriptionService.patch(dto, jdId);
+        return ResponseEntity.status(HttpStatus.OK).body(descriptionDto);
+    }
+
+
     // 삭제
 
 }
