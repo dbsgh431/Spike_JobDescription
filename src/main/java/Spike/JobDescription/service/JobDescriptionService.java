@@ -50,13 +50,19 @@ public class JobDescriptionService {
 
     // 수정
     @Transactional
-    public JobDescriptionDto patch(JobDescriptionDto dto, Long jobId) {
-        JobDescription target = jobDescriptionRepository.findById(jobId).orElseThrow(() -> new IllegalArgumentException("잘못된 요청 id입니다."));
+    public JobDescriptionDto patch(JobDescriptionDto dto, Long jdId) {
+        JobDescription target = jobDescriptionRepository.findById(jdId).orElseThrow(() -> new IllegalArgumentException("잘못된 요청 id입니다. 요청 id : " + jdId));
         target.patch(dto);
         JobDescription updated = jobDescriptionRepository.save(target);
         return JobDescriptionDto.createJobDescriptionDto(updated);
     }
+
+
     // 삭제
-
-
+    @Transactional
+    public JobDescriptionDto remove(Long jdId) {
+        JobDescription jobDescription = jobDescriptionRepository.findById(jdId).orElseThrow(() -> new IllegalArgumentException("잘못된 요청 id입니다. 요청 id : " + jdId));
+        jobDescriptionRepository.delete(jobDescription);
+        return JobDescriptionDto.createJobDescriptionDto(jobDescription);
+    }
 }
