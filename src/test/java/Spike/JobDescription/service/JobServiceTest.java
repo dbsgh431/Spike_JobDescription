@@ -3,7 +3,7 @@ package Spike.JobDescription.service;
 import Spike.JobDescription.entity.Job;
 import Spike.JobDescription.entity.User;
 import Spike.JobDescription.repository.JobRepository;
-import Spike.JobDescription.repository.JobRepositoryImplMemory;
+import Spike.JobDescription.repository.MemoryJobRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 class JobServiceTest {
-    private JobRepository jobRepository = new JobRepositoryImplMemory();
+    private JobRepository jobRepository = new MemoryJobRepository();
 
     @AfterEach
     void afterEach() {

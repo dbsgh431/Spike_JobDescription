@@ -3,7 +3,7 @@ package Spike.JobDescription.service;
 
 import Spike.JobDescription.dto.UserDto;
 import Spike.JobDescription.entity.User;
-import Spike.JobDescription.repository.UserRepositoryImplJpa;
+import Spike.JobDescription.repository.JpaUserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserService {
 
-    private final UserRepositoryImplJpa userRepository;
+    private final JpaUserRepository userRepository;
     @Transactional
     public UserDto signUp(UserDto userDto) {
         User toEntity = userDto.toEntity();

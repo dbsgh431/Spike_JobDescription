@@ -5,9 +5,9 @@ import Spike.JobDescription.dto.JobDto;
 import Spike.JobDescription.dto.UserDto;
 import Spike.JobDescription.entity.Job;
 import Spike.JobDescription.entity.User;
-import Spike.JobDescription.repository.CoverLetterRepositoryImplJpa;
-import Spike.JobDescription.repository.JobRepositoryImplJpa;
-import Spike.JobDescription.repository.UserRepositoryImplJpa;
+import Spike.JobDescription.repository.JpaCoverLetterRepository;
+import Spike.JobDescription.repository.JpaJobRepository;
+import Spike.JobDescription.repository.JpaUserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -24,9 +24,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JobService {
 
-    private final JobRepositoryImplJpa jobRepository;
-    private final UserRepositoryImplJpa userRepository;
-    private final CoverLetterRepositoryImplJpa coverLetterRepository;
+    private final JpaJobRepository jobRepository;
+    private final JpaUserRepository userRepository;
+    private final JpaCoverLetterRepository coverLetterRepository;
 
     public List<Job> showAll(User loginUser) {
         User user = userRepository.findById(loginUser.getId()).orElse(null);

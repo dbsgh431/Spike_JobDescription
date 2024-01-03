@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface CoverLetterRepositoryImplJpa extends CrudRepository<CoverLetter, Long>, CoverLetterRepository {
+public interface JpaCoverLetterRepository extends CrudRepository<CoverLetter, Long>, CoverLetterRepository {
 
 
     @Override

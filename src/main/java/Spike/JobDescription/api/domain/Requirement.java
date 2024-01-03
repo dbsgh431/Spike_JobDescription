@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @NoArgsConstructor
 @Slf4j
-public class JobDescription {
+public class Requirement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +27,7 @@ public class JobDescription {
     @Column
     private String body;
 
-    public static JobDescription createDescription(JobDescriptionDto dto, Job job) {
+    public static Requirement createDescription(RequirementDto dto, Job job) {
         log.info("dto={}", dto);
         if (dto.getId() != null) {
             throw new IllegalArgumentException("이미 존재하는 자격 및 우대사항 입니다.");
@@ -37,11 +37,11 @@ public class JobDescription {
             throw new IllegalArgumentException("게시한 공고 정보가 다릅니다.");
         }
 
-        return new JobDescription(dto.getId(), job, dto.getTitle(), dto.getBody());
+        return new Requirement(dto.getId(), job, dto.getTitle(), dto.getBody());
     }
 
 
-    public void patch(JobDescriptionDto dto) {
+    public void patch(RequirementDto dto) {
         // 예외 처리
         if (this.id != dto.getId()) {
             throw new IllegalArgumentException("잘못된 요청 id입니다.");

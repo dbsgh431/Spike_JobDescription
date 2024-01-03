@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class UserRepositoryImpMemory implements UserRepository{
+public class MemoryUserRepository implements UserRepository{
 
     private long sequence = 0L;
     private static Map<Long, User> userMap = new HashMap<>();

@@ -11,7 +11,7 @@ import java.util.*;
 
 @Slf4j
 @RequiredArgsConstructor
-public class JobRepositoryImplMemory implements JobRepository {
+public class MemoryJobRepository implements JobRepository {
     private static Map<Long, Job> store = new HashMap<>();
 
     private long sequence = 0L;

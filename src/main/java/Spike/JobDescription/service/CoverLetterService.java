@@ -5,8 +5,8 @@ import Spike.JobDescription.dto.CoverLetterDto;
 import Spike.JobDescription.dto.UserDto;
 import Spike.JobDescription.entity.CoverLetter;
 import Spike.JobDescription.entity.Job;
-import Spike.JobDescription.repository.CoverLetterRepositoryImplJpa;
-import Spike.JobDescription.repository.JobRepositoryImplJpa;
+import Spike.JobDescription.repository.JpaCoverLetterRepository;
+import Spike.JobDescription.repository.JpaJobRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,8 +19,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CoverLetterService {
 
-    private final CoverLetterRepositoryImplJpa coverLetterRepository;
-    private final JobRepositoryImplJpa jobRepository;
+    private final JpaCoverLetterRepository coverLetterRepository;
+    private final JpaJobRepository jobRepository;
 
     public List<CoverLetter> showAll(Long job_id) {
         List<CoverLetter> coverLetters = coverLetterRepository.findByJobId(job_id);
