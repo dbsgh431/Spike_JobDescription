@@ -1,10 +1,12 @@
 package Spike.JobDescription.controller;
 
+import Spike.JobDescription.api.domain.RequirementDto;
 import Spike.JobDescription.dto.JobDto;
 import Spike.JobDescription.dto.UserDto;
 import Spike.JobDescription.entity.Job;
 import Spike.JobDescription.entity.User;
 import Spike.JobDescription.service.JobService;
+import Spike.JobDescription.service.RequirementService;
 import Spike.JobDescription.web.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +18,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 @Slf4j
@@ -23,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class JobController {
 
     private final JobService jobService;
+    private final RequirementService requirementService;
 
     // 상단 네비게이션 바에 로그인한 유저 데이터 처리를 위한 모델
     @ModelAttribute
@@ -69,8 +74,10 @@ public class JobController {
 
         if (jobService.isCorrectUser(id, loginUser.toEntity())) {
             JobDto JobDto = jobService.showJob(id);
+            List<RequirementDto> requirementDtos = requirementService.showAll(id);
             if (JobDto != null) {
                 model.addAttribute("jobDto", JobDto);
+                model.addAttribute("requirements", requirementDtos);
                 return "jobs/editJob";
             }
         }

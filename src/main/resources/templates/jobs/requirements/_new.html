@@ -1,0 +1,66 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<new th:fragment="new">
+    <div class="card m-2" id="comments-new" th:object="${jobDto}">
+        <div class="card-body">
+            <form>
+                <!-- 닉네임 입력 -->
+                <div class="mb-3">
+                    <select class="form-select" aria-label="Default select example" id="requirement-type">
+                        <option selected disabled>자격 및 우대사항</option>
+                        <option value="1">자격요건</option>
+                        <option value="2">우대사항</option>
+                    </select>
+                </div>
+                <!-- 댓글 입력 -->
+                <div class="mb-3">
+                    <label class="form-label">내용</label>
+                    <textarea type="text" class="form-control" rows="3"
+                              id="new-requirement-body"></textarea>
+                </div>
+                <!-- id 전달 -->
+                <input type="hidden" id="new-requirement-id" th:field="*{id}">
+                <button type="button" class="btn btn-primary" id="requirement-create-btn">입력</button>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+    // 입력 버튼 매핑
+    const requirementCreateBtn = document.querySelector("#requirement-create-btn");
+    const requirementTypeSelect = document.querySelector("#requirement-type");
+    // 버튼 이벤트 처리
+    requirementCreateBtn.addEventListener("click", function() {
+        const title = (requirementTypeSelect.value === "1") ? "자격요건" : "우대사항";
+        // 새로운 자격사항 객체 생성
+        const requirement = {
+            title: title,
+            body: document.querySelector("#new-requirement-body").value,
+            jobId: document.querySelector("#new-requirement-id").value
+            };
+        // 객체 출력
+        console.log(requirement);
+        // fetch() -> 비동기 통신을 위한 api
+        const url = "/jobs/api/requirement/" + requirement.jobId;
+        fetch(url, {
+                    method: "POST",
+                    headers: {
+                    "Content-Type" : "application/json"},
+                    body: JSON.stringify(requirement) // requirement 객체를 JSON 문자열로 변환해 전송
+                    }).then(response => {
+                    // HTTP 응답 코드에 따른 메시지 출력
+                    const msg = (response.ok) ? "자격요건 및 우대사항이 등록됐습니다." : "등록 실패.";
+                    alert(msg);
+                    // 현재 페이지 새로고침
+                    window.location.reload();
+                    });
+
+        });
+
+
+
+
+    </script>
+</new>
+</html>

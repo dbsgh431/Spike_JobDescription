@@ -1,0 +1,26 @@
+<!-- requirement.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>댓글 템플릿</title>
+</head>
+<body>
+<div th:fragment="requirementSection(requirements)">
+
+    <div th:each="requirement : ${requirements}" class="requirement">
+        <!-- 자격 및 우대사항 제목 -->
+        <div class="card m-2">
+            <div class="card-header" th:text="${requirement.title}">
+                Featured
+            </div>
+            <!-- 내용 -->
+            <div class="card-body">
+                <p class="card-text" th:text="${requirement.body}">
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

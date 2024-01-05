@@ -35,6 +35,11 @@
             지원 여부
         </label>
     </div>
+
+    <!-- 댓글 템플릿 포함 -->
+    <div th:replace="~{jobs/requirements/_list :: requirementSection(${requirements})}"></div>
+    <div th:insert="~{jobs/requirements/_new :: new}"></div>
+
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
         <a class="btn btn-primary" th:href="@{${jobDto.url}}" role="button" target="_blank">홈페이지에서 지원하기</a>
         <a class="btn btn-primary" th:href="@{|/jobs/coverLetters/${jobDto.id}|}" role="button">자소서 관리</a>
