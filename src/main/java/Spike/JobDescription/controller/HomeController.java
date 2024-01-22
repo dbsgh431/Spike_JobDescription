@@ -2,11 +2,10 @@ package Spike.JobDescription.controller;
 
 
 import Spike.JobDescription.dto.UserDto;
-import Spike.JobDescription.entity.User;
 import Spike.JobDescription.service.UserService;
 import Spike.JobDescription.web.SessionConst;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -81,6 +80,7 @@ public class HomeController {
             return "signUp";
         }
     }
+
 
     @PostMapping("/withdraw")
     public String withdraw(@RequestParam(name = "id") Long id, HttpSession session) {
