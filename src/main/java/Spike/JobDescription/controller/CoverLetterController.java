@@ -28,8 +28,9 @@ public class CoverLetterController {
 
     // 상단 네비게이션 바에 로그인한 유저 데이터 처리를 위한 모델
     @ModelAttribute
-    public void usernameToNavbar(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) UserDto loginUserDto, Model model) {
-        model.addAttribute("username", loginUserDto.toEntity().getEmail());
+    public void usernameToNavbar(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) UserDto loginUser, Model model) {
+        model.addAttribute("username", loginUser.toEntity().getEmail());
+        model.addAttribute("id", loginUser.toEntity().getId());
     }
 
     // 자기소개서 등록 시 해당 공고 정보 공통 처리 모델

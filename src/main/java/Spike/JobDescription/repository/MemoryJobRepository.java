@@ -49,6 +49,11 @@ public class MemoryJobRepository implements JobRepository {
     }
 
     @Override
+    public void DeleteByUserId(Long userId) {
+
+    }
+
+    @Override
     public void delete(Job job) {
         if (store.containsKey(job.getId())) {
             store.remove(job.getId());

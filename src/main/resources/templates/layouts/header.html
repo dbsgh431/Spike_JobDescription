@@ -26,6 +26,10 @@
               </a>
               <ul class="dropdown-menu" th:if="${username} != null" >
                 <li><a class="dropdown-item" href="/logout">로그아웃</a></li>
+                <li><form th:action="@{/withdraw}" method="post">
+                  <input name="id" type="hidden" th:value="${id}">
+                  <button type="submit">회원탈퇴</button></form>
+                </li>
               </ul>
             </li>
           </ul>

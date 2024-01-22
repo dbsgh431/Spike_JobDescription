@@ -3,6 +3,8 @@ package Spike.JobDescription.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,6 +22,8 @@ public class User {
 
     @Column(length = 12)
     private String password;
+
+
 
     public boolean checkPassword(String password) {
         return this.password.equals(password);

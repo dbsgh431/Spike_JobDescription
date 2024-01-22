@@ -3,6 +3,7 @@ package Spike.JobDescription.service;
 
 import Spike.JobDescription.dto.UserDto;
 import Spike.JobDescription.entity.User;
+import Spike.JobDescription.repository.JpaJobRepository;
 import Spike.JobDescription.repository.JpaUserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserService {
 
+
     private final JpaUserRepository userRepository;
+    private final JpaJobRepository jobRepository;
+
     @Transactional
     public UserDto signUp(UserDto userDto) {
         User toEntity = userDto.toEntity();
@@ -42,5 +46,15 @@ public class UserService {
                 .email(found.getEmail())
                 .password(found.getPassword())
                 .build();
+    }
+
+    public boolean withdraw(Long id) {
+        if (!userRepository.findById(id).isEmpty()) {
+            jobRepository.DeleteByUserId(id);
+            userRepository.deleteById(id);
+            return true;
+        }
+        return false;
+
     }
 }

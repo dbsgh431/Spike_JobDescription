@@ -2,9 +2,11 @@ package Spike.JobDescription.repository;
 
 import Spike.JobDescription.entity.Job;
 import Spike.JobDescription.entity.User;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -35,4 +37,10 @@ public interface JpaJobRepository extends JpaRepository<Job, Long>, JobRepositor
 
     @Override
     Page<Job> findByUser(User user, Pageable pageable);
+
+    @Override
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM job WHERE user_Id = :userId", nativeQuery = true)
+    void DeleteByUserId(@Param("userId") Long userId);
 }

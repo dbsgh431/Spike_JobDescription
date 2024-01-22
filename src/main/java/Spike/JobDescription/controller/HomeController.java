@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
@@ -79,5 +80,12 @@ public class HomeController {
             model.addAttribute("exist", "이미 존재하는 회원 이메일입니다.");
             return "signUp";
         }
+    }
+
+    @PostMapping("/withdraw")
+    public String withdraw(@RequestParam(name = "id") Long id, HttpSession session) {
+        session.removeAttribute(SessionConst.LOGIN_USER);
+        userService.withdraw(id);
+        return "redirect:/jobs";
     }
 }

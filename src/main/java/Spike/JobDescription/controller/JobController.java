@@ -33,6 +33,7 @@ public class JobController {
     @ModelAttribute
     public void usernameToNavbar(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) UserDto loginUser, Model model) {
         model.addAttribute("username", loginUser.toEntity().getEmail());
+        model.addAttribute("id", loginUser.toEntity().getId());
     }
 
     @GetMapping("")
